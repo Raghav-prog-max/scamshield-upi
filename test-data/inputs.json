@@ -1,0 +1,118 @@
+[
+  {
+    "id": "N1",
+    "type": "normal",
+    "description": "Fake KYC update link SMS",
+    "input": "Dear Customer, your SBI account KYC has expired and your account will be blocked within 24 hours. Update your KYC now: http://bit.ly/sbi-kyc-upd8 -SBI",
+    "expected_verdict": "scam",
+    "expected_language": "en"
+  },
+  {
+    "id": "N2",
+    "type": "normal",
+    "description": "UPI collect request: receive Rs 5000, enter PIN",
+    "input": "Congratulations! You have received ₹5000 from PhonePe Rewards. To receive ₹5000 in your account, approve the collect request and enter your UPI PIN. Offer valid for 10 minutes only.",
+    "expected_verdict": "scam",
+    "expected_language": "en"
+  },
+  {
+    "id": "N3",
+    "type": "normal",
+    "description": "Fake electricity disconnection",
+    "input": "Dear Consumer, your electricity power will be disconnected tonight at 9.30 PM because your previous month bill was not updated. Please immediately contact our electricity officer 9876543210. Thank you.",
+    "expected_verdict": "scam",
+    "expected_language": "en"
+  },
+  {
+    "id": "N4",
+    "type": "normal",
+    "description": "Job offer asking for a registration fee",
+    "input": "Hi! We are hiring for Amazon part-time work from home. Earn ₹3000-₹8000 daily by liking YouTube videos. Pay a one-time registration fee of ₹499 to start. WhatsApp HR Priya: wa.me/919812345678",
+    "expected_verdict": "scam",
+    "expected_language": "en"
+  },
+  {
+    "id": "N5",
+    "type": "normal",
+    "description": "Genuine HDFC UPI debit alert",
+    "input": "Sent Rs.2,350.00 From HDFC Bank A/C *4821 To SWIGGY On 21/11/26 Ref 633215478901 Not You? Call 18002586161/SMS BLOCK UPI to 7308080808",
+    "expected_verdict": "safe",
+    "expected_language": "en"
+  },
+  {
+    "id": "N6",
+    "type": "normal",
+    "description": "Genuine bank OTP that says do not share",
+    "input": "483921 is your OTP for a transaction of INR 1,299.00 at AMAZON on your ICICI Bank Credit Card XX5005. Valid for 10 mins. Do not share this OTP with anyone, including bank officials. - ICICI Bank",
+    "expected_verdict": "safe",
+    "expected_language": "en"
+  },
+  {
+    "id": "E1",
+    "type": "edge",
+    "description": "Hinglish KYC scam",
+    "input": "Priya grahak, aapka KYC expire ho gaya hai, turant link pe click karo warna aapka bank account aaj raat band ho jayega: http://kyc-update-now.in/verify",
+    "expected_verdict": "scam",
+    "expected_language": "hinglish"
+  },
+  {
+    "id": "E2",
+    "type": "edge",
+    "description": "Pure Hindi (Devanagari) lottery scam",
+    "input": "बधाई हो! आपने KBC लॉटरी में ₹25,00,000 जीते हैं। इनाम पाने के लिए ₹4,500 प्रोसेसिंग शुल्क इस UPI ID पर भेजें: kbcprize@ybl और कॉल आने पर अपना OTP बताएं।",
+    "expected_verdict": "scam",
+    "expected_language": "hi"
+  },
+  {
+    "id": "E3",
+    "type": "edge",
+    "description": "Lookalike domain sbi-kyc-update.in",
+    "input": "SBI: Your YONO account has been suspended due to incomplete PAN verification. Re-activate within 2 hours at https://sbi-kyc-update.in/login to avoid permanent block.",
+    "expected_verdict": "scam",
+    "expected_language": "en"
+  },
+  {
+    "id": "E4",
+    "type": "edge",
+    "description": "Genuine Amazon delivery message with a real-domain link",
+    "input": "Delivered: Your Amazon package with boAt Airdopes 141 was delivered today. Track your orders or request a return at https://www.amazon.in/gp/css/order-history",
+    "expected_verdict": "safe",
+    "expected_language": "en"
+  },
+  {
+    "id": "E5",
+    "type": "edge",
+    "description": "'Friend' on a new number asking for urgent money",
+    "input": "Hey it's me Rohan, I changed my number. I'm stuck at the hospital and my UPI isn't working. Can you send ₹8,000 to rohan.help@okaxis right now? Will return tomorrow. Please don't call, I can't talk.",
+    "expected_verdict": "suspicious",
+    "expected_language": "en",
+    "note": "Judgement call: it could be a real friend, so the target is 'suspicious' (verify by calling the old number). 'scam' is counted wrong for strict accuracy but right for risky-vs-safe accuracy."
+  },
+  {
+    "id": "I1",
+    "type": "invalid",
+    "description": "Empty string",
+    "input": "",
+    "expected_verdict": "invalid",
+    "expected_language": null,
+    "note": "Must be rejected by input validation; no LLM call."
+  },
+  {
+    "id": "I2",
+    "type": "invalid",
+    "description": "Random gibberish",
+    "input": "asdkj 123",
+    "expected_verdict": "safe",
+    "expected_language": "en",
+    "note": "Passes validation (not empty, under 2000 chars), so it reaches the LLM. Nothing in it asks for money, a PIN or a click, so the classifier should not invent a scam."
+  },
+  {
+    "id": "I3",
+    "type": "invalid",
+    "description": "2500-character text",
+    "input": "Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 AM in the clubhouse, the water tank will be cleaned on Tuesday, and parking stickers can be collected from the office. Weekly community newsletter: the society meeting is on Sunday at 10 A",
+    "expected_verdict": "invalid",
+    "expected_language": null,
+    "note": "Must be rejected by input validation (over 2000 characters); no LLM call."
+  }
+]
