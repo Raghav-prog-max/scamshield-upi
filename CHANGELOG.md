@@ -63,3 +63,8 @@ All notable changes to ScamShield UPI. Dates are YYYY-MM-DD.
   - E5 is expected `suspicious` but got `scam` in all versions.
   - Final N2 run 1 hit a Google HTTP 504 (`DEADLINE_EXCEEDED`).
 - Live check in the browser: the Hinglish sample returned SCAM (100%), 4 grounded red flags and a Hinglish reply in 11.8 s.
+
+### Deployed
+- Pushed to GitHub (public): https://github.com/Raghav-prog-max/scamshield-upi
+- Deployed to Vercel production: https://scamshield-upi.vercel.app. `GEMINI_API_KEY` is set as a secret env var for Production and Preview.
+- Checked the live site without logging in: the page returns HTTP 200. A genuine HDFC debit alert returned `safe` (95) with `[]` red flags in 4.9 s. Empty input returned HTTP 400 with no LLM call.
