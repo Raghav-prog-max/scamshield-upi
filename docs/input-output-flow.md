@@ -8,7 +8,7 @@ sequenceDiagram
     participant B as Browser (components/analyzer.tsx)
     participant API as POST /api/analyze
     participant PL as lib/pipeline.ts
-    participant G as Gemini 2.5 Flash
+    participant G as Gemini 3.1 Flash Lite
 
     U->>B: Paste message, click Analyze
     B->>B: validateInput(): empty? > 2000 chars?
@@ -55,7 +55,7 @@ sequenceDiagram
       { "flag": "...", "evidence": "turant link pe click karo", "why_risky": "..." }
     ],
     "advice": { "summary": "...", "do_now": ["..."], "never_do": ["..."], "report": "..." },
-    "meta": { "model": "gemini-2.5-flash", "total_ms": 0, "ungrounded_flags_removed": 0, "attempts": { "P1": 1, "P2": 1, "P3": 1 } }
+    "meta": { "model": "gemini-3.1-flash-lite", "total_ms": 0, "ungrounded_flags_removed": 0, "attempts": { "P1": 1, "P2": 1, "P3": 1 } }
   }
 }
 ```

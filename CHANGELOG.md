@@ -38,3 +38,16 @@ All notable changes to ScamShield UPI. Dates are YYYY-MM-DD.
 - `scripts/run-tests.ts`: runs v1 / v2 / v3 / final (or all) over every case twice. It saves raw outputs and metrics to `test-data/outputs/<version>.json` and regenerates `test-data/results-summary.md` from those files.
 - `docs/`: Mermaid diagrams for the prompt workflow, task decomposition, input → output flow and system architecture.
 - `README.md` and `code/README.md` (the app is at the repo root for zero-config Vercel deploys).
+
+### Changed — model and secret check
+- **Default model changed from `gemini-2.5-flash` to `gemini-3.5-flash`.** With a newly created API key, Google's API returned HTTP 404 for `gemini-2.5-flash` and `gemini-2.5-flash-lite` (*"no longer available to new users"*). `gemini-3.8-flash` returned HTTP 503 (high demand) in the same check. `gemini-3.5-flash` worked with the prompts' exact settings (temperature 0.1, JSON mode, thinking budget 0). The model can still be overridden with `GEMINI_MODEL`.
+- `scripts/check-secrets.sh` now also blocks the newer `AQ.`-format Google API keys and allows `.` inside a `GEMINI_API_KEY=` value. Tested with a fake key: the commit was blocked.
+- First live check: `POST /api/analyze` with an SBI YONO KYC scam returned `scam` (98) with 4 grounded red flags and advice in 8.4 s.
+- The UI shows the rate-limit error cleanly when Gemini returns 429 (seen in the browser while the test runner was using the quota).
+- **First full test run on `gemini-3.5-flash` stopped after v1's N6:** Google's 429 reported the free-tier limit `GenerateRequestsPerDayPerProjectPerModel-FreeTier=20`. Nothing was saved.
+- **Default model changed again, to `gemini-3.1-flash-lite`.** It works with the same settings and has a larger free daily quota. At 20 requests a day, `gemini-3.5-flash` would allow only about 6 checks a day on the public demo (3 calls per check). All saved test results use `gemini-3.1-flash-lite`.
+
+### Fixed — test runner
+- **Network failures are no longer counted as wrong verdicts.** In the second run, the internet connection dropped during v2 (N2 run 2). Every remaining v2, v3 and final call failed with `fetch failed`, and the runner recorded them as `error` verdicts. That produced meaningless rows (for example v3 "4/28"). Those outputs were discarded, not committed.
+- `lib/gemini.ts` now classifies "no HTTP response" errors as `network` and retries them. The runner waits 15 s, up to 4 times. If they keep failing, the runner stops without saving, like it already did for quota errors. Persistent 503 errors now stop it the same way. The API route returns 503 "temporarily unavailable" for network errors.
+- v1's results from that run are kept: all 24 of its calls reached Gemini. v2, v3 and final were re-run after the fix.

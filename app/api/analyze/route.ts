@@ -72,7 +72,7 @@ export async function POST(request: Request) {
       if (err.kind === "rate_limit" || err.kind === "quota") {
         return fail(503, "rate_limited", "The AI service is busy right now (rate limit). Please try again in a minute.");
       }
-      if (err.kind === "unavailable") {
+      if (err.kind === "unavailable" || err.kind === "network") {
         return fail(503, "unavailable", "The AI service is temporarily unavailable. Please try again shortly.");
       }
       if (err.kind === "config") {

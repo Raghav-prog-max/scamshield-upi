@@ -1,0 +1,439 @@
+{
+  "version": "v1",
+  "model": "gemini-3.1-flash-lite",
+  "run_at": "2026-11-22T17:17:30.483Z",
+  "runs_per_case": 2,
+  "prompt_files": [
+    "prompts/v1/P1.md"
+  ],
+  "metrics": {
+    "cases": 14,
+    "llm_cases": 12,
+    "runs_per_case": 2,
+    "accuracy_strict": {
+      "correct": 20,
+      "total": 28
+    },
+    "accuracy_risky_vs_safe": {
+      "correct": 22,
+      "total": 28
+    },
+    "json_valid": {
+      "valid": 0,
+      "total": 24,
+      "what": "P1 responses that parse with JSON.parse and match the schema"
+    },
+    "consistency": {
+      "consistent": 10,
+      "total": 12
+    },
+    "wrong": [
+      "N5#1 scam→safe",
+      "N5#2 scam→safe",
+      "N6#1 scam→safe",
+      "N6#2 scam→safe",
+      "E2#2 unparsed→scam",
+      "E5#1 scam→suspicious",
+      "E5#2 scam→suspicious",
+      "I2#2 scam→safe"
+    ]
+  },
+  "cases": [
+    {
+      "id": "N1",
+      "type": "normal",
+      "description": "Fake KYC update link SMS",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 3277,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n1.  **Suspicious Link:** Official banks like SBI (State Bank of India) will never send you a link using a URL shortener like `bit.ly`. These services are used to mask the true destination of a website, which is a classic tactic used by scammers to lead you to a fake phishing site.\n2.  **Urgency/Threat:** Scammers use high-pressure tactics—such as threatening to block your account within 24 hours—to cause panic. They want you to act quickly without thinking or verifying the information.\n3.  **Generic Greeting:** The message starts with \"Dear Customer\" rather than your actual name. Legitimate banks typically address you by your registered name in official communications.\n4.  **Security Policy:** Banks generally do not ask customers to perform KYC (Know Your Customer) updates via text message links. These processes are usually handled through official mobile apps, secure banking portals, or in person at a bank branch.\n\n**What you should do:**\n*   **Do not click the link.**\n*   **Delete the message immediately.**\n*   If you are genuinely concerned about your account status, log in to your bank account using the **official** SBI app or by typing the official website address directly into your browser. Never use links provided in unsolicited text messages or emails."
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 3015,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n1.  **Suspicious Link:** Official banks like SBI (State Bank of India) will never use shortened URL services like \"bit.ly\" to send you to a login page. These links are designed to hide the true destination of the website.\n2.  **Urgency/Threats:** Scammers use high-pressure tactics—like threatening to \"block your account within 24 hours\"—to make you panic and act without thinking. Real banks typically notify you through secure internal messaging or ask you to visit a physical branch rather than demanding urgent action via a text link.\n3.  **Security Risks:** Clicking that link would likely lead you to a fake (\"phishing\") website designed to steal your SBI internet banking username, password, and possibly your OTP (One-Time Password).\n4.  **Generic Greeting:** The message addresses you as \"Dear Customer\" rather than by your actual name, which is a common hallmark of mass-sent phishing scams.\n\n**What you should do:**\n*   **Do not click the link.**\n*   **Delete the message immediately.**\n*   If you are genuinely concerned about your account status, log in to your bank account using the official SBI app or by typing the official bank website address (**onlinesbi.sbi**) manually into your browser. Never use links provided in text messages or emails."
+        }
+      ]
+    },
+    {
+      "id": "N2",
+      "type": "normal",
+      "description": "UPI collect request: receive Rs 5000, enter PIN",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 12482,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n1.  **The \"Collect Request\" Trap:** In the UPI system, **you only enter your PIN to send money, never to receive it.** If you \"approve\" a collect request and enter your UPI PIN, you are authorizing the sender to withdraw money from your account, not send money to you.\n2.  **Urgency:** Scammers use a countdown timer (like \"10 minutes only\") to create panic. This is designed to prevent you from thinking clearly or verifying the message with official sources.\n3.  **Unsolicited Rewards:** Legitimate companies like PhonePe do not send text messages asking you to enter a PIN to receive a reward. If they give a cashback or reward, it is automatically credited to your wallet or bank account without any action required from you.\n4.  **Common Fraud Tactic:** This is a classic \"UPI Collect Request Scam.\" The message is designed to trick you into authorizing a debit from your own bank account under the guise of receiving a payment.\n\n**What to do:**\n*   **Do not click any links** in the message.\n*   **Do not enter your UPI PIN** for any request you were not expecting.\n*   **Delete the message** and block the sender. \n*   If you are ever unsure about an offer, check the \"Rewards\" or \"Offers\" section directly inside the official PhonePe app."
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 5381,
+          "raw": "**YES, this is a scam.**\n\nHere is why:\n\n1.  **The \"Collect Request\" Trap:** In the UPI system (PhonePe, Google Pay, Paytm, etc.), **entering your UPI PIN is only required to send money, not to receive it.** If you are receiving money, no PIN is required. If a message asks you to enter your PIN to \"receive\" funds, you are actually authorizing a transfer of money *out* of your account to the scammer.\n2.  **Urgency:** Scammers use phrases like \"Offer valid for 10 minutes only\" to panic you into acting quickly without thinking or verifying the source.\n3.  **Unsolicited Rewards:** Legitimate companies like PhonePe will notify you of rewards directly within the official app. They will never send a text message asking you to approve a \"collect request\" to get a bonus.\n\n**What to do:**\n*   **Do NOT click any links** in the message.\n*   **Do NOT enter your UPI PIN.**\n*   **Delete the message** and block the sender.\n*   **Never share your UPI PIN** with anyone, under any circumstances."
+        }
+      ]
+    },
+    {
+      "id": "N3",
+      "type": "normal",
+      "description": "Fake electricity disconnection",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 3073,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n1.  **Sense of Urgency/Threat:** Scammers use high-pressure tactics, such as threatening immediate disconnection, to panic you into acting without thinking.\n2.  **Generic Salutation:** Legitimate utility companies almost always address you by your account name or number. \"Dear Consumer\" is a red flag indicating a mass-distributed phishing message.\n3.  **Unprofessional Contact Method:** Utility companies do not send text messages demanding you call a personal mobile number to resolve billing issues. They typically communicate through official billing portals, automated phone systems, or formal mail.\n4.  **Suspicious Call to Action:** The goal of this message is to get you to call the number provided, where a scammer will likely pretend to be an official, ask for your personal/bank details, or demand an immediate \"urgent\" payment via an untraceable method (like gift cards, wire transfers, or crypto).\n\n**What you should do:**\n*   **Do not call the number** provided in the text.\n*   **Do not click any links** if there are any.\n*   **Check your account status** by logging into the official website or app of your electricity provider, or by calling the customer service number printed on your official paper bill.\n*   **Delete the message.**"
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 4243,
+          "raw": "**Yes.**\n\nThis message is a classic scam, and you should not contact the number provided. Here is why:\n\n1.  **Urgency and Fear:** Scammers use threats of immediate disconnection to make you panic. This is a common tactic designed to prevent you from thinking critically or verifying the claim.\n2.  **Unprofessional Communication:** Utility companies do not send abrupt, informal text messages threatening to cut power at night (especially at 9:30 PM). They follow formal procedures, which include sending multiple mailed notices to your registered address long before a disconnection occurs.\n3.  **Generic Greeting:** The message addresses you as \"Dear Consumer\" rather than by your name or account number. Legitimate utility companies will use your account details to identify you.\n4.  **Suspicious Call-to-Action:** The message asks you to call a specific mobile number. Official utility companies have verified, toll-free customer service lines listed on their official websites and on your monthly paper bill. \n\n**What you should do:**\n*   **Do not call the number** or reply to the message.\n*   **Do not click any links** if there were any included.\n*   **Delete the message.**\n*   If you are concerned about your account status, look up your utility provider's **official phone number** from your previous paper bill or their verified website and call them directly to check your account status."
+        }
+      ]
+    },
+    {
+      "id": "N4",
+      "type": "normal",
+      "description": "Job offer asking for a registration fee",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 2103,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n1.  **The \"Registration Fee\" Scam:** Legitimate companies never ask you to pay money to get a job. Any request for a \"registration fee,\" \"security deposit,\" or \"training fee\" is a classic hallmark of a recruitment scam. Once you pay, they will either ghost you or ask for more money for \"software access\" or \"tax clearance.\"\n2.  **Unrealistic Pay:** Earning ₹3,000–₹8,000 per day for simply liking YouTube videos is not a real job. If such a job existed, everyone would be doing it, and companies wouldn't need to recruit through random WhatsApp messages.\n3.  **Task Scam Pattern:** This is a well-known \"Task Scam.\" These scammers often start by paying you a small amount of money (for the first few \"tasks\") to build your trust. Once you are comfortable, they will pressure you to invest a larger amount of money to \"unlock\" higher-paying tasks, at which point they disappear with your money.\n4.  **Impersonation:** Scammers frequently use the names of major, trusted companies like Amazon, Google, or Flipkart to gain legitimacy. Amazon does not hire employees via random WhatsApp messages to like videos.\n\n**What you should do:**\n*   **Do not pay** any money.\n*   **Do not share** any personal or banking information.\n*   **Block and report** the number on WhatsApp. \n*   **Delete the message.** If you are interested in working for Amazon, always apply directly through their official careers website (amazon.jobs)."
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 4513,
+          "raw": "**Yes, this is definitely a scam.**\n\nHere is why:\n\n*   **The \"Pay to Work\" Red Flag:** Legitimate companies will **never** ask you to pay a registration fee, training fee, or \"security deposit\" to start a job. If you have to pay money to get a job, it is a scam.\n*   **Unrealistic Earnings:** Earning ₹3000–₹8000 daily for simply \"liking YouTube videos\" is not a real job. If it were that easy to make that much money, no one would be working traditional jobs. These numbers are used to lure people in with the promise of \"easy money.\"\n*   **The \"Task Scam\" Model:** This is a common pattern known as a \"Task Scam.\" They usually start by asking you to perform small tasks (like liking videos) and might even pay you a tiny amount initially to gain your trust. Once they have built that trust, they will trick you into \"investing\" larger sums of money with the promise of higher returns, at which point they will block you and disappear with your money.\n*   **Impersonation:** Scammers frequently use the names of well-known, trusted companies like Amazon to make their fake offers appear legitimate. Amazon does not hire random people via WhatsApp for \"like and subscribe\" tasks.\n\n**What you should do:**\n*   **Do not send any money.**\n*   **Do not provide personal information** (like your bank details, Aadhaar, or PAN).\n*   **Block the sender** and report the number on WhatsApp.\n*   **Delete the message.**"
+        }
+      ]
+    },
+    {
+      "id": "N5",
+      "type": "normal",
+      "description": "Genuine HDFC UPI debit alert",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 5204,
+          "raw": "**Yes, this message is a scam.**\n\nHere is why:\n\n1.  **The \"Not You?\" Trap:** This is a classic \"vishing\" (voice phishing) scam. The message is designed to create a sense of urgency or panic. If you call that number, the scammer will pose as a bank official and try to trick you into sharing your bank details, OTPs, or installing remote access apps (like AnyDesk or TeamViewer) under the guise of \"reversing the transaction.\"\n2.  **Generic Source:** Legitimate bank alerts typically come from a specific sender ID (like HDFC's verified shortcode) and include specific details about your account that match your actual transaction history. Scammers send these to random numbers, hoping the recipient will panic.\n3.  **The Goal:** The number provided in the text is **not** an official HDFC Bank customer care number. Scammers set up these fake help lines to intercept your personal information.\n4.  **How to verify:** If you are truly concerned, **do not call the number in the text.** Instead, open your official HDFC mobile banking app or log into their verified website to check your transaction history. If there is no such transaction recorded there, the message is 100% a fake.\n\n**What you should do:**\n*   **Do not call the number.**\n*   **Do not reply to the SMS.**\n*   **Delete the message.**\n*   **Block the sender.**"
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 4081,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n1.  **The \"Not You?\" Trap:** This is a classic \"vishing\" (voice phishing) tactic. The message is designed to create panic by making you believe money was stolen from your account. If you call the number provided, the scammer will pretend to be a bank official and ask you to share your UPI PIN, OTP, or remote desktop app (like AnyDesk/TeamViewer) to \"reverse the transaction.\" **If you provide these, they will drain your account.**\n2.  **Generic Formatting:** While the message looks like a bank alert, scammers can easily spoof sender IDs to make these messages appear in the same thread as your legitimate bank messages.\n3.  **Fake Helpline Numbers:** Banks will never put a random mobile number to \"block\" your account in an SMS alert. Official bank communication will always direct you to their verified website or the official app to manage security settings.\n4.  **Transaction Logic:** If you did not make the transaction, **no one can \"reverse\" it via a phone call.** A bank would require you to file an official dispute through their app or at a physical branch.\n\n**What you should do:**\n*   **Do NOT call the number** in the message.\n*   **Do NOT reply** to the SMS.\n*   If you are truly worried about your account, open your actual HDFC Bank app or visit their official website (do not click links in the message) to check your recent transactions.\n*   Block the sender and delete the message."
+        }
+      ]
+    },
+    {
+      "id": "N6",
+      "type": "normal",
+      "description": "Genuine bank OTP that says do not share",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 3643,
+          "raw": "**It depends entirely on whether you were actively trying to make a purchase at that exact moment.**\n\nHere is the breakdown:\n\n**YES, it is a scam if:**\n*   You did not initiate a transaction for ₹1,299 at Amazon just now.\n*   The message came from an unknown mobile number (not a verified bank shortcode).\n*   The message includes a link (this one does not, which is a good sign, but be cautious).\n\n**NO, it is likely legitimate if:**\n*   You were currently in the process of checking out on Amazon and requested this OTP to complete the payment.\n\n### Important Safety Rules:\n1.  **Do not share the OTP:** If you did not request this, **do not share it with anyone.** Scammers often call posing as bank officials, claiming they need the OTP to \"cancel the fraudulent transaction.\" This is a lie; they need the OTP to finalize a theft.\n2.  **Check your app:** If you are unsure, do not use any links in the text. Instead, open your ICICI bank app independently or log in to your Amazon account to check your \"Pending Orders\" or \"Transaction History.\"\n3.  **Verify the sender:** Legitimate bank messages usually come from a \"Sender ID\" (like AD-ICICIB) rather than a regular 10-digit mobile number.\n4.  **When in doubt, block and ignore:** If you didn't initiate the transaction, ignore the message. The scammer cannot steal money just by sending you an OTP; they can only steal it if you provide the OTP to them."
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 5485,
+          "raw": "**It depends entirely on whether you were attempting to make a purchase at that exact moment.**\n\nHere is how to determine the answer:\n\n### **YES, it is a scam if:**\n*   **You were not trying to buy anything:** If you received this message out of the blue, it is a **phishing attempt or a fraudulent transaction**. Someone may have obtained your card details and is trying to make a purchase, or they are using \"SIM swapping\" or other social engineering tactics to trick you into sharing the code.\n*   **Someone called you:** If you received this message and immediately received a call from someone claiming to be a \"bank official\" asking for the OTP to \"cancel a fraudulent transaction,\" **it is a scam.** A bank will never ask you to share an OTP.\n\n### **NO, it is not a scam if:**\n*   **You were actively making a purchase:** If you were currently on the Amazon website or app checking out with your ICICI card, this is a legitimate message from the bank to verify your payment.\n\n---\n\n### **Critical Safety Rules:**\n1.  **NEVER share the OTP:** No legitimate bank employee or Amazon representative will ever ask you to read back an OTP. If someone asks for it, they are trying to steal your money.\n2.  **Check the sender:** Look at the sender ID. If it is a generic mobile number (e.g., +91 9xxxxxxxxx) instead of an official bank shortcode (e.g., VM-ICICIB), it is definitely a scam.\n3.  **If in doubt, ignore it:** If you did not initiate the transaction, do not reply to the message, do not click any links, and do not provide the code to anyone.\n4.  **Take Action:** If you were **not** making a purchase, log into your official ICICI Bank mobile app or website immediately to **block your card** or call the bank’s official customer care number (found on the back of your card) to report the unauthorized transaction attempt."
+        }
+      ]
+    },
+    {
+      "id": "E1",
+      "type": "edge",
+      "description": "Hinglish KYC scam",
+      "expected_verdict": "scam",
+      "expected_language": "hinglish",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 2091,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n1.  **Urgency and Threats:** Scammers often use \"fear tactics\" (like threatening to close your bank account by tonight) to pressure you into acting without thinking. No legitimate bank will threaten to shut down your account immediately via a text message.\n2.  **Suspicious Link:** The URL `kyc-update-now.in` is **not** an official bank website. Official bank websites always end in the bank's specific domain (e.g., `hdfcbank.com`, `sbi.co.in`). Scammers create fake websites that look real to steal your login credentials, OTPs, or personal details.\n3.  **Generic Greeting:** The message starts with \"Priya grahak\" (Dear customer). Legitimate banks usually address you by your registered name rather than a generic term.\n4.  **KYC Procedures:** Banks generally notify you about KYC through official email, mobile banking apps, or official letters. They will never send a random link via SMS asking you to provide sensitive information.\n\n**What you should do:**\n*   **Do NOT click the link.** Clicking it could download malware onto your phone or lead you to a phishing site.\n*   **Delete the message** immediately.\n*   **Do not share** any OTPs, passwords, or PINs with anyone, even if they claim to be from your bank.\n*   If you are truly worried about your KYC status, visit your bank's **official app** or go to your **local bank branch** in person."
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 2588,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n1.  **Suspicious URL:** The link provided (`kyc-update-now.in`) is not an official bank domain. Banks always use their official website address (e.g., `bankname.com`). Scammers create fake websites that look similar to bank portals to steal your credentials.\n2.  **Creating False Urgency/Fear:** Scammers often use threats—like \"your account will be closed tonight\"—to panic you into acting quickly without thinking. Legitimate banks never demand that you complete a KYC update immediately under the threat of shutting down your account.\n3.  **Generic Greeting:** Using \"Priya grahak\" (Dear customer) instead of your actual name is a hallmark of mass-distributed phishing scams. Banks usually address you by your registered name.\n4.  **Security Policy:** Banks officially state that they will never send you a link via SMS or email to update your KYC. KYC updates are typically done by visiting a bank branch in person or through the bank's official, authenticated mobile app.\n\n**What you should do:**\n*   **Do not click the link.**\n*   **Do not enter any personal information** (like your Aadhaar number, PAN, or banking passwords) on that site.\n*   **Delete the message.**\n*   If you are concerned about your KYC status, visit your nearest bank branch or log in to your bank's official app to check your account status."
+        }
+      ]
+    },
+    {
+      "id": "E2",
+      "type": "edge",
+      "description": "Pure Hindi (Devanagari) lottery scam",
+      "expected_verdict": "scam",
+      "expected_language": "hi",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 3678,
+          "raw": "**Yes (हाँ), यह एक स्कैम (धोखाधड़ी) है।**\n\nइसे बिल्कुल भी न मानें। इसके पीछे के कारण ये हैं:\n\n1.  **पैसे की मांग:** कोई भी असली लॉटरी या सरकारी संस्था इनाम देने के लिए आपसे पहले पैसे (प्रोसेसिंग शुल्क) की मांग नहीं करती है। यह स्कैमर्स का सबसे आम तरीका है।\n2.  **OTP मांगना:** कभी भी अपना OTP किसी को न बताएं। अगर आप अपना OTP शेयर करते हैं, तो स्कैमर आपके बैंक खाते से सारा पैसा निकाल सकते हैं। \n3.  **KBC का नाम:** KBC (कौन बनेगा करोड़पति) कभी भी रैंडम मैसेज के जरिए लॉटरी नहीं खिलाता और न ही व्हाट्सएप या मैसेज पर विजेता घोषित करता है।\n4.  **संदिग्ध UPI ID:** `kbcprize@ybl` जैसी UPI ID पूरी तरह से फर्जी होती हैं।\n\n**आपको क्या करना चाहिए?**\n*   इस मैसेज का जवाब न दें।\n*   इस नंबर को तुरंत **ब्लॉक** कर दें।\n*   किसी भी लिंक पर क्लिक न करें और न ही कोई पैसा भेजें।\n*   अगर आपने पहले ही अपना OTP साझा कर दिया है, तो तुरंत अपने बैंक को फोन करके अपना खाता (Account) फ्रीज करवाएं और साइबर सेल (cybercrime.gov.in) पर शिकायत दर्ज करें।"
+        },
+        {
+          "run": 2,
+          "verdict": "unparsed",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 4997,
+          "raw": "**हाँ, यह एक स्कैम (धोखाधड़ी) है।**\n\nइसके पीछे मुख्य कारण निम्नलिखित हैं:\n\n1. **पैसे की मांग:** कोई भी वैध लॉटरी या सरकारी संस्था इनाम देने के लिए आपसे पहले पैसे (प्रोसेसिंग शुल्क के नाम पर) नहीं मांगती है। यह ठगी का सबसे आम तरीका है।\n2. **OTP साझा करना:** किसी भी व्यक्ति या संस्था को अपना **OTP (One Time Password) कभी न दें**। यदि आप अपना OTP साझा करते हैं, तो स्कैमर आपके बैंक खाते से सारा पैसा निकाल सकते हैं।\n3. **लॉटरी का लालच:** KBC (कौन बनेगा करोड़पति) जैसी संस्थाएं कभी भी किसी को बिना किसी प्रतियोगिता में भाग लिए फोन या मैसेज पर लॉटरी नहीं देती हैं।\n4. **अज्ञात स्रोत:** यह संदेश किसी आधिकारिक माध्यम से नहीं आया है, बल्कि एक आम स्कैम मैसेज है जो आजकल बहुत से लोगों को भेजा जा रहा है।\n\n**आपको क्या करना चाहिए?**\n* इस नंबर या UPI ID पर कोई पैसा न भेजें।\n* अपना OTP किसी को न बताएं।\n* इस नंबर को ब्लॉक कर दें और इसे 'Spam' के रूप में रिपोर्ट करें।\n* किसी भी अनजान लिंक पर क्लिक न करें।"
+        }
+      ]
+    },
+    {
+      "id": "E3",
+      "type": "edge",
+      "description": "Lookalike domain sbi-kyc-update.in",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 4511,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n1.  **Fake Website URL:** The link provided (`sbi-kyc-update.in`) is **not** the official State Bank of India website. Official SBI communications will always use the official domain (`onlinesbi.sbi` or `sbi.co.in`). Scammers create \"lookalike\" domains to steal your login credentials.\n2.  **Urgency/Fear Tactics:** The message uses a common phishing tactic by threatening a \"permanent block\" and imposing a strict 2-hour deadline. This is designed to make you panic and act without thinking.\n3.  **Generic Request:** Banks do not typically use SMS to request sensitive KYC updates via external links. Official communication regarding account suspensions is usually handled through secure internal bank messaging or by asking you to visit a branch or the official app.\n\n**What you should do:**\n*   **Do not click the link.**\n*   **Do not enter any information** on that website.\n*   **Delete the message.**\n*   If you are concerned about your account status, navigate to the official SBI website or use your official SBI YONO app directly (do not use links from texts)."
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 2227,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n1.  **Fake Domain Name:** The URL provided (`sbi-kyc-update.in`) is **not** an official State Bank of India website. Official SBI websites always end in `onlinesbi.sbi` or `sbi.co.in`. Scammers use similar-looking web addresses to trick you.\n2.  **Creating False Urgency:** The message claims your account will be \"permanently blocked\" within 2 hours. This is a classic phishing tactic designed to make you panic and act without thinking. Real banks do not threaten to permanently close your account via a text message link.\n3.  **Generic Phishing Pattern:** Banks never send unsolicited SMS messages requesting that you click a link to update sensitive information like your PAN or KYC status. \n\n**What you should do:**\n*   **Do not click the link.** Doing so could lead to a site designed to steal your banking login credentials, OTPs, or personal identity information.\n*   **Delete the message.**\n*   If you are genuinely concerned about your account status, navigate to the official SBI website (onlinesbi.sbi) or use the official SBI YONO app directly on your phone to check your account. **Never** use links provided in suspicious text messages or emails."
+        }
+      ]
+    },
+    {
+      "id": "E4",
+      "type": "edge",
+      "description": "Genuine Amazon delivery message with a real-domain link",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "safe",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 36321,
+          "raw": "**No, this message is likely legitimate.**\n\nHere is why:\n\n1.  **The Link:** The URL provided (`https://www.amazon.in/gp/css/order-history`) is the official domain for Amazon India. It directs you to the \"Your Orders\" page. Scammers typically use shortened links (like bit.ly) or URLs that look similar to Amazon but have slight misspellings (e.g., `amazon-support-in.com`) to hide their true destination.\n2.  **The Content:** The message is a standard delivery notification. It does not ask for sensitive information (like passwords, OTPs, or bank details), nor does it create a false sense of urgency (like threatening to close your account).\n3.  **The Action:** The link takes you to a secure, official area of the Amazon website where you can verify the information yourself.\n\n**Safety Tips:**\n*   **Verify independently:** Even if you trust a link, the safest way to check an order is to open your Amazon app or go to Amazon.in directly through your browser, rather than clicking the link in the text.\n*   **Check the Sender:** If this came from a short-code number (usually 6 digits) that you have received other Amazon notifications from in the past, it is almost certainly legitimate.\n*   **Never share OTPs:** Remember that Amazon will never ask you to provide an OTP via SMS or a phone call to \"verify\" a delivery."
+        },
+        {
+          "run": 2,
+          "verdict": "safe",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 2450,
+          "raw": "**No.**\n\nBased on the URL provided, this message appears to be **legitimate**.\n\n**Explanation:**\n*   **The URL:** The link provided is `https://www.amazon.in/gp/css/order-history`. This is the official domain for Amazon India. It directs you to your actual order history page, which is where Amazon legitimately directs users to manage their orders.\n*   **The Content:** It is standard practice for Amazon to send delivery notifications via SMS. Because the URL leads to the official Amazon website (not a suspicious shortened link or a lookalike domain), it is safe.\n\n**Safety Tip:** Even when a link looks correct, **you should get into the habit of not clicking links in SMS messages.** If you are expecting a package, it is always safer to open the Amazon app on your phone or type `amazon.in` directly into your browser to check your order status. This practice protects you from \"smishing\" (SMS phishing) attacks where attackers might use a legitimate-looking link to redirect you to a fake login page."
+        }
+      ]
+    },
+    {
+      "id": "E5",
+      "type": "edge",
+      "description": "'Friend' on a new number asking for urgent money",
+      "expected_verdict": "suspicious",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 1685,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n*   **Urgency and Pressure:** The message creates a false sense of urgency (\"right now\") to make you act quickly without thinking or verifying the information.\n*   **Preventing Verification:** The instruction \"Please don't call, I can't talk\" is a classic red flag. It is designed to prevent you from calling your actual friend to verify if they are truly in trouble.\n*   **Classic \"Imposter Scam\" Pattern:** This is a common social engineering tactic where scammers impersonate a known contact (in this case, \"Rohan\") to exploit your trust. They often claim to have a \"new number\" to explain why they are messaging from an unknown source.\n*   **Financial Request:** Scammers almost always target financial platforms like UPI because these transactions are fast, difficult to reverse, and easy for criminals to access anonymously.\n\n**What you should do:**\n1.  **Do not send any money.**\n2.  **Contact the \"Rohan\" you know** using the original number you have saved in your contacts (not the one that messaged you). You will likely find that he is not in the hospital and did not change his number.\n3.  **Delete and block** the number that sent the message. \n4.  **Report the UPI ID** (rohan.help@okaxis) to your banking app or the UPI provider as a fraudulent account."
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 22058,
+          "raw": "**Yes, this is a scam.**\n\nHere is why:\n\n*   **Urgency and Pressure:** The message creates a false sense of emergency (\"stuck at the hospital\") to pressure you into acting without thinking.\n*   **\"Don't Call\" Instruction:** This is a classic tactic used by scammers to prevent you from verifying their identity or speaking to the real person they are impersonating. \n*   **Impersonation:** This is a common \"friend-in-need\" scam. Scammers pose as a known contact (Rohan) using a new number to request money for a fake emergency.\n*   **Payment Request:** Asking for money via UPI to an unfamiliar or generic handle (like `rohan.help@okaxis`) is a major red flag.\n\n**What you should do:**\n1.  **Do not send any money.**\n2.  **Verify independently:** Call or message your friend Rohan using his *old, original phone number*. You will likely find that he is perfectly fine and did not send that message.\n3.  **Report and Block:** Block the number that sent the message. If you use a messaging app like WhatsApp, you can report the number as spam/scam within the app settings. \n4.  **Warn others:** If you have a group chat with the real Rohan, let them know that someone is impersonating him so they don't get tricked."
+        }
+      ]
+    },
+    {
+      "id": "I1",
+      "type": "invalid",
+      "description": "Empty string",
+      "expected_verdict": "invalid",
+      "expected_language": null,
+      "validator": "empty",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "invalid"
+        },
+        {
+          "run": 2,
+          "verdict": "invalid"
+        }
+      ]
+    },
+    {
+      "id": "I2",
+      "type": "invalid",
+      "description": "Random gibberish",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "safe",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 1181,
+          "raw": "**No.**\n\n\"asdkj 123\" is gibberish. It does not contain a malicious link, a request for personal information, or a fake sense of urgency. It is most likely a \"test\" message, a typo, or someone accidentally hitting keys on their keyboard."
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": null,
+          "confidence": null,
+          "scam_type": null,
+          "json_valid": false,
+          "latency_ms": 1407,
+          "raw": "**Yes.**\n\n**Explanation:**\nThe message \"asdkj 123\" is gibberish and does not contain any coherent information, context, or legitimate communication. In the context of messaging, random strings of characters like this are typically used for two reasons:\n\n1.  **Testing/Bot Activity:** A bot or a spammer may be testing whether an account is active, checking for automated responses, or bypassing filters to see if a message can be delivered.\n2.  **Phishing/Malicious intent:** While there is no link or request here, it is often the \"handshake\" or initial contact used by scammers to see if you will reply. Once you reply, they confirm your account is active and will likely follow up with a scripted scam.\n\n**Recommendation:** Do not reply to the message. Simply delete it and block the sender."
+        }
+      ]
+    },
+    {
+      "id": "I3",
+      "type": "invalid",
+      "description": "2500-character text",
+      "expected_verdict": "invalid",
+      "expected_language": null,
+      "validator": "too_long",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "invalid"
+        },
+        {
+          "run": 2,
+          "verdict": "invalid"
+        }
+      ]
+    }
+  ]
+}

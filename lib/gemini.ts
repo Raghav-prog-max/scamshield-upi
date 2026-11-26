@@ -1,7 +1,7 @@
 import { ApiError, GoogleGenAI } from "@google/genai";
 import type { PromptConfig } from "./prompts";
 
-export type LlmErrorKind = "config" | "rate_limit" | "quota" | "unavailable" | "api";
+export type LlmErrorKind = "config" | "rate_limit" | "quota" | "unavailable" | "network" | "api";
 
 export class LlmError extends Error {
   constructor(
@@ -17,6 +17,10 @@ export class LlmError extends Error {
 export interface GenerateOptions {
   /** How many times to wait and retry after a 429 (per-minute limit). The web app uses 0. */
   rateLimitRetries?: number;
+  /** Retries after a network failure (no HTTP response at all). Default 1. */
+  networkRetries?: number;
+  /** Wait before each network retry. Default 2 s. */
+  networkWaitMs?: number;
   onWait?: (ms: number, reason: string) => void;
 }
 
@@ -24,7 +28,7 @@ let client: GoogleGenAI | null = null;
 
 // Read lazily so scripts can load .env.local before the first call.
 export function getModel(): string {
-  return process.env.GEMINI_MODEL || "gemini-2.5-flash";
+  return process.env.GEMINI_MODEL || "gemini-3.1-flash-lite";
 }
 
 function getClient(): GoogleGenAI {
@@ -59,6 +63,10 @@ function toLlmError(err: unknown): LlmError {
   if (status === 404) {
     return new LlmError(`Model "${getModel()}" was not found: ${message.slice(0, 200)}`, "config");
   }
+  // No HTTP response at all: the request never reached Gemini (connection down, DNS, timeout).
+  if (status === undefined && /fetch failed|ECONNRESET|ECONNREFUSED|ENOTFOUND|ETIMEDOUT|EAI_AGAIN|socket hang up|network/i.test(message)) {
+    return new LlmError("Could not reach Gemini (network error).", "network");
+  }
   return new LlmError(`Gemini request failed: ${message.slice(0, 300)}`, "api");
 }
 
@@ -76,6 +84,7 @@ export async function generate(
   const ai = getClient();
   let rateLimitRetries = options.rateLimitRetries ?? 0;
   let unavailableRetries = 2;
+  let networkRetries = options.networkRetries ?? 1;
 
   for (;;) {
     try {
@@ -95,6 +104,12 @@ export async function generate(
       const err = toLlmError(raw);
       if (err.kind === "unavailable" && unavailableRetries-- > 0) {
         const wait = 2000;
+        options.onWait?.(wait, err.message);
+        await sleep(wait);
+        continue;
+      }
+      if (err.kind === "network" && networkRetries-- > 0) {
+        const wait = options.networkWaitMs ?? 2000;
         options.onWait?.(wait, err.message);
         await sleep(wait);
         continue;

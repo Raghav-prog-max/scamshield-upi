@@ -6,7 +6,7 @@ Paste a suspicious SMS, WhatsApp or email message, in **English, Hindi or Hingli
 2. the **red flags**, each quoted word-for-word from the message and highlighted, with a plain-language reason,
 3. **what to do next**: what to do now, what never to do, and where to report it (cybercrime.gov.in / 1930), replied in the user's own language.
 
-Built as a prompt-engineering mini project: three chained Gemini 2.5 Flash prompts, versioned prompt files, a measured prompt-iteration history and a reproducible test runner.
+Built as a prompt-engineering mini project: three chained Gemini prompts (`gemini-3.1-flash-lite`, see [Model](#model)), versioned prompt files, a measured prompt-iteration history and a reproducible test runner.
 
 - **Live demo:** `https://<your-project>.vercel.app` ← _replace after deploying (see [Deploy](#deploy-to-vercel))_
 - **Team members:** _Name 1 (roll no.)_, _Name 2 (roll no.)_, _Name 3 (roll no.)_ ← _replace_
@@ -31,6 +31,12 @@ Safeguards in code around the prompts:
 - **Prompt-injection hygiene:** the message is wrapped in `<message>` tags and every prompt says to treat it as data only. P3 never sees the raw message, so it cannot repeat a scam link.
 
 Diagrams: [prompt workflow](docs/prompt-workflow.md) · [task decomposition](docs/task-decomposition.md) · [input → output flow](docs/input-output-flow.md) · [system architecture](docs/system-architecture.md)
+
+### Model
+
+The project was planned for **Gemini 2.5 Flash**. On 2026-11-22, a newly created API key got **HTTP 404** for `gemini-2.5-flash` and `gemini-2.5-flash-lite` (*"no longer available to new users"*). `gemini-3.8-flash` returned **HTTP 503** (high demand) in the same check. `gemini-3.5-flash` worked with the prompts' exact settings (temperature 0.1, JSON mode, thinking budget 0). However, its free tier allows only **20 requests per day per model** (from Google's 429 response: `GenerateRequestsPerDayPerProjectPerModel-FreeTier=20`). That limit ran out partway through the first test run, and it would allow only about 6 checks a day on the public demo, since each check makes 3 calls.
+
+The default model is therefore **`gemini-3.1-flash-lite`**. It works with the same settings, and its free daily quota is larger: v1's 27 calls ran without hitting a daily limit. **All test results below were measured with `gemini-3.1-flash-lite`.** To use a different model, set `GEMINI_MODEL`; the prompts stay the same. Google does not publish free-tier limits per model; signed-in users can see them at <https://aistudio.google.com/rate-limit>.
 
 ### P1 iteration (v1 → v2 → v3)
 
@@ -145,7 +151,7 @@ vercel env add GEMINI_API_KEY production
 vercel --prod
 ```
 
-Optional env var: `GEMINI_MODEL` (default `gemini-2.5-flash`).
+Optional env var: `GEMINI_MODEL` (default `gemini-3.1-flash-lite`).
 
 ---
 

@@ -126,7 +126,7 @@ async function runVersion(version: Version, cases: TestCase[], runs: number) {
 
   const onWait = (ms: number, reason: string) =>
     console.log(`    … ${reason} Waiting ${Math.round(ms / 1000)} s and retrying.`);
-  const genOpts = { rateLimitRetries: 8, onWait };
+  const genOpts = { rateLimitRetries: 8, networkRetries: 4, networkWaitMs: 15_000, onWait };
 
   console.log(`\n=== ${version} · ${getModel()} · ${cases.length} cases × ${runs} runs ===`);
   const records: CaseRecord[] = [];
@@ -172,8 +172,14 @@ async function runVersion(version: Version, cases: TestCase[], runs: number) {
           });
         }
       } catch (err) {
-        if (err instanceof LlmError && (err.kind === "quota" || err.kind === "config")) {
-          console.error(`\nStopped: ${err.message} Results for ${version} were NOT saved.`);
+        // Infrastructure failures say nothing about the prompt: stop instead of
+        // recording them as wrong verdicts. (2026-11-22: a dropped connection
+        // turned every v2/v3/final call into "fetch failed" and was counted as wrong.)
+        if (
+          err instanceof LlmError &&
+          (err.kind === "quota" || err.kind === "config" || err.kind === "network" || err.kind === "unavailable")
+        ) {
+          console.error(`\nStopped: ${err.message} Results for ${version} were NOT saved (not a prompt result).`);
           process.exit(1);
         }
         rec.runs.push({

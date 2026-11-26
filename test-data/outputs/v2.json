@@ -1,0 +1,439 @@
+{
+  "version": "v2",
+  "model": "gemini-3.1-flash-lite",
+  "run_at": "2026-11-25T21:09:48.411Z",
+  "runs_per_case": 2,
+  "prompt_files": [
+    "prompts/v2/P1.md"
+  ],
+  "metrics": {
+    "cases": 14,
+    "llm_cases": 12,
+    "runs_per_case": 2,
+    "accuracy_strict": {
+      "correct": 24,
+      "total": 28
+    },
+    "accuracy_risky_vs_safe": {
+      "correct": 26,
+      "total": 28
+    },
+    "json_valid": {
+      "valid": 24,
+      "total": 24,
+      "what": "P1 responses that parse with JSON.parse and match the schema"
+    },
+    "consistency": {
+      "consistent": 12,
+      "total": 12
+    },
+    "wrong": [
+      "N5#1 scam→safe",
+      "N5#2 scam→safe",
+      "E5#1 scam→suspicious",
+      "E5#2 scam→suspicious"
+    ],
+    "language_detected": {
+      "correct": 24,
+      "total": 24
+    }
+  },
+  "cases": [
+    {
+      "id": "N1",
+      "type": "normal",
+      "description": "Fake KYC update link SMS",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "fake_kyc",
+          "json_valid": true,
+          "latency_ms": 1485,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"en\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "fake_kyc",
+          "json_valid": true,
+          "latency_ms": 1479,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"en\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "N2",
+      "type": "normal",
+      "description": "UPI collect request: receive Rs 5000, enter PIN",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "collect_request",
+          "json_valid": true,
+          "latency_ms": 1881,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"collect_request\",\n  \"language\": \"en\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "collect_request",
+          "json_valid": true,
+          "latency_ms": 938,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"collect_request\",\n  \"language\": \"en\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "N3",
+      "type": "normal",
+      "description": "Fake electricity disconnection",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "impersonation",
+          "json_valid": true,
+          "latency_ms": 931,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"impersonation\",\n  \"language\": \"en\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "impersonation",
+          "json_valid": true,
+          "latency_ms": 111060,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"impersonation\",\n  \"language\": \"en\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "N4",
+      "type": "normal",
+      "description": "Job offer asking for a registration fee",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "job_offer",
+          "json_valid": true,
+          "latency_ms": 1261,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"job_offer\",\n  \"language\": \"en\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "job_offer",
+          "json_valid": true,
+          "latency_ms": 1208,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"job_offer\",\n  \"language\": \"en\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "N5",
+      "type": "normal",
+      "description": "Genuine HDFC UPI debit alert",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "impersonation",
+          "json_valid": true,
+          "latency_ms": 1241,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"impersonation\",\n  \"language\": \"en\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "impersonation",
+          "json_valid": true,
+          "latency_ms": 1048,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"impersonation\",\n  \"language\": \"en\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "N6",
+      "type": "normal",
+      "description": "Genuine bank OTP that says do not share",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "safe",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "none",
+          "json_valid": true,
+          "latency_ms": 1090,
+          "raw": "{\n  \"verdict\": \"safe\",\n  \"confidence\": 100,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "safe",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "none",
+          "json_valid": true,
+          "latency_ms": 1105,
+          "raw": "{\n  \"verdict\": \"safe\",\n  \"confidence\": 100,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "E1",
+      "type": "edge",
+      "description": "Hinglish KYC scam",
+      "expected_verdict": "scam",
+      "expected_language": "hinglish",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "hinglish",
+          "confidence": 100,
+          "scam_type": "fake_kyc",
+          "json_valid": true,
+          "latency_ms": 994,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"hinglish\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "hinglish",
+          "confidence": 100,
+          "scam_type": "fake_kyc",
+          "json_valid": true,
+          "latency_ms": 1171,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"hinglish\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "E2",
+      "type": "edge",
+      "description": "Pure Hindi (Devanagari) lottery scam",
+      "expected_verdict": "scam",
+      "expected_language": "hi",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "hi",
+          "confidence": 100,
+          "scam_type": "lottery",
+          "json_valid": true,
+          "latency_ms": 1423,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"lottery\",\n  \"language\": \"hi\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "hi",
+          "confidence": 100,
+          "scam_type": "lottery",
+          "json_valid": true,
+          "latency_ms": 1053,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"lottery\",\n  \"language\": \"hi\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "E3",
+      "type": "edge",
+      "description": "Lookalike domain sbi-kyc-update.in",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "fake_kyc",
+          "json_valid": true,
+          "latency_ms": 1121,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"en\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "fake_kyc",
+          "json_valid": true,
+          "latency_ms": 1152,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"en\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "E4",
+      "type": "edge",
+      "description": "Genuine Amazon delivery message with a real-domain link",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "safe",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "none",
+          "json_valid": true,
+          "latency_ms": 1198,
+          "raw": "{\n  \"verdict\": \"safe\",\n  \"confidence\": 100,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "safe",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "none",
+          "json_valid": true,
+          "latency_ms": 17870,
+          "raw": "{\n  \"verdict\": \"safe\",\n  \"confidence\": 100,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "E5",
+      "type": "edge",
+      "description": "'Friend' on a new number asking for urgent money",
+      "expected_verdict": "suspicious",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "impersonation",
+          "json_valid": true,
+          "latency_ms": 951,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"impersonation\",\n  \"language\": \"en\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "impersonation",
+          "json_valid": true,
+          "latency_ms": 1127,
+          "raw": "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"impersonation\",\n  \"language\": \"en\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "I1",
+      "type": "invalid",
+      "description": "Empty string",
+      "expected_verdict": "invalid",
+      "expected_language": null,
+      "validator": "empty",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "invalid"
+        },
+        {
+          "run": 2,
+          "verdict": "invalid"
+        }
+      ]
+    },
+    {
+      "id": "I2",
+      "type": "invalid",
+      "description": "Random gibberish",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "safe",
+          "language": "en",
+          "confidence": 100,
+          "scam_type": "none",
+          "json_valid": true,
+          "latency_ms": 69934,
+          "raw": "{\n  \"verdict\": \"safe\",\n  \"confidence\": 100,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+        },
+        {
+          "run": 2,
+          "verdict": "safe",
+          "language": "en",
+          "confidence": 90,
+          "scam_type": "none",
+          "json_valid": true,
+          "latency_ms": 106304,
+          "raw": "{\n  \"verdict\": \"safe\",\n  \"confidence\": 90,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+        }
+      ]
+    },
+    {
+      "id": "I3",
+      "type": "invalid",
+      "description": "2500-character text",
+      "expected_verdict": "invalid",
+      "expected_language": null,
+      "validator": "too_long",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "invalid"
+        },
+        {
+          "run": 2,
+          "verdict": "invalid"
+        }
+      ]
+    }
+  ]
+}

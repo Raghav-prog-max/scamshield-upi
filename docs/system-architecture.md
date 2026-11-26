@@ -26,7 +26,7 @@ flowchart LR
     end
 
     subgraph Google [Google AI]
-        MODEL["Gemini 2.5 Flash<br/>generateContent"]
+        MODEL["Gemini 3.1 Flash Lite<br/>generateContent"]
     end
 
     subgraph Offline [Local only]
