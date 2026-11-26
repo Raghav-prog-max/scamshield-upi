@@ -9,7 +9,7 @@ Paste a suspicious SMS, WhatsApp or email message, in **English, Hindi or Hingli
 Built as a prompt-engineering mini project: three chained Gemini prompts (`gemini-3.1-flash-lite`, see [Model](#model)), versioned prompt files, a measured prompt-iteration history and a reproducible test runner.
 
 - **Live demo:** <https://scamshield-upi.vercel.app>  ·  **Code:** <https://github.com/Raghav-prog-max/scamshield-upi>
-- **Team members:** _Name 1 (roll no.)_, _Name 2 (roll no.)_, _Name 3 (roll no.)_ ← _replace_
+- **Team members:** Raghav Sharma (S24CSEU0302), Devansh Gupta (S24CSEU1349)
 
 ---
 
