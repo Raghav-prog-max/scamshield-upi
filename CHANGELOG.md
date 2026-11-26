@@ -51,3 +51,15 @@ All notable changes to ScamShield UPI. Dates are YYYY-MM-DD.
 - **Network failures are no longer counted as wrong verdicts.** In the second run, the internet connection dropped during v2 (N2 run 2). Every remaining v2, v3 and final call failed with `fetch failed`, and the runner recorded them as `error` verdicts. That produced meaningless rows (for example v3 "4/28"). Those outputs were discarded, not committed.
 - `lib/gemini.ts` now classifies "no HTTP response" errors as `network` and retries them. The runner waits 15 s, up to 4 times. If they keep failing, the runner stops without saving, like it already did for quota errors. Persistent 503 errors now stop it the same way. The API route returns 503 "temporarily unavailable" for network errors.
 - v1's results from that run are kept: all 24 of its calls reached Gemini. v2, v3 and final were re-run after the fix.
+
+## 2026-11-26
+
+### Fixed
+- Each Gemini request now times out after 30 s (`httpOptions.timeout`) and a timeout is retried like a network error. Before this, one stalled request froze a final-pipeline run for more than 5 minutes, so that run was stopped and restarted.
+
+### Results (gemini-3.1-flash-lite, 14 cases × 2 runs)
+- v1 20/28, v2 24/28, v3 26/28, final 25/28 (strict accuracy). JSON valid: v1 0/24, v2 24/24, v3 24/24, final 69/69.
+- Remaining failures, not tuned:
+  - E5 is expected `suspicious` but got `scam` in all versions.
+  - Final N2 run 1 hit a Google HTTP 504 (`DEADLINE_EXCEEDED`).
+- Live check in the browser: the Hinglish sample returned SCAM (100%), 4 grounded red flags and a Hinglish reply in 11.8 s.

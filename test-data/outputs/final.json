@@ -1,0 +1,1729 @@
+{
+  "version": "final",
+  "model": "gemini-3.1-flash-lite",
+  "run_at": "2026-11-26T03:38:24.854Z",
+  "runs_per_case": 2,
+  "prompt_files": [
+    "prompts/final/P1.md",
+    "prompts/final/P2.md",
+    "prompts/final/P3.md"
+  ],
+  "metrics": {
+    "cases": 14,
+    "llm_cases": 12,
+    "runs_per_case": 2,
+    "accuracy_strict": {
+      "correct": 25,
+      "total": 28
+    },
+    "accuracy_risky_vs_safe": {
+      "correct": 27,
+      "total": 28
+    },
+    "json_valid": {
+      "valid": 69,
+      "total": 69,
+      "what": "P1+P2+P3 first attempts that were strictly valid JSON"
+    },
+    "consistency": {
+      "consistent": 11,
+      "total": 12
+    },
+    "wrong": [
+      "N2#1 error→scam",
+      "E5#1 scam→suspicious",
+      "E5#2 scam→suspicious"
+    ],
+    "language_detected": {
+      "correct": 23,
+      "total": 24
+    },
+    "extra": {
+      "Pipeline runs failed": "1/24",
+      "Steps that needed the retry": "0/69",
+      "P2 evidence quoted verbatim": "48/48 flags (0 not found in message, removed)",
+      "P2 returns [] when safe": "8/8 safe runs",
+      "P3 reply in user's language": "23/23 runs (script + Hinglish-word heuristic)",
+      "P3 report line correct": "23/23 runs (1930/cybercrime.gov.in if risky, empty if safe)",
+      "Avg pipeline time": "14.7 s"
+    }
+  },
+  "cases": [
+    {
+      "id": "N1",
+      "type": "normal",
+      "description": "Fake KYC update link SMS",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 4860,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "fake_kyc",
+            "language": "en"
+          },
+          "red_flags": [
+            {
+              "flag": "Urgent threat to block account",
+              "evidence": "your account will be blocked within 24 hours",
+              "why_risky": "Scammers use fake deadlines to make you panic and act without thinking."
+            },
+            {
+              "flag": "Suspicious link for KYC",
+              "evidence": "Update your KYC now: http://bit.ly/sbi-kyc-upd8",
+              "why_risky": "Official banks do not use shortened links like bit.ly to collect your personal information."
+            },
+            {
+              "flag": "Generic greeting",
+              "evidence": "Dear Customer",
+              "why_risky": "Real banks usually address you by your registered name instead of a generic label."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message is a scam. It is trying to steal your personal information by creating a fake sense of urgency.",
+            "do_now": [
+              "Delete the message immediately.",
+              "Ignore the link provided in the message.",
+              "Visit your bank's official website or app directly if you are worried about your account status."
+            ],
+            "never_do": [
+              "Never click on any links sent via SMS or WhatsApp.",
+              "Never share your bank passwords, OTP, or PIN with anyone.",
+              "Do not reply to the sender of the message."
+            ],
+            "report": "Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1584
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Urgent threat to block account\",\n    \"evidence\": \"your account will be blocked within 24 hours\",\n    \"why_risky\": \"Scammers use fake deadlines to make you panic and act without thinking.\"\n  },\n  {\n    \"flag\": \"Suspicious link for KYC\",\n    \"evidence\": \"Update your KYC now: http://bit.ly/sbi-kyc-upd8\",\n    \"why_risky\": \"Official banks do not use shortened links like bit.ly to collect your personal information.\"\n  },\n  {\n    \"flag\": \"Generic greeting\",\n    \"evidence\": \"Dear Customer\",\n    \"why_risky\": \"Real banks usually address you by your registered name instead of a generic label.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1554
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message is a scam. It is trying to steal your personal information by creating a fake sense of urgency.\",\n  \"do_now\": [\n    \"Delete the message immediately.\",\n    \"Ignore the link provided in the message.\",\n    \"Visit your bank's official website or app directly if you are worried about your account status.\"\n  ],\n  \"never_do\": [\n    \"Never click on any links sent via SMS or WhatsApp.\",\n    \"Never share your bank passwords, OTP, or PIN with anyone.\",\n    \"Do not reply to the sender of the message.\"\n  ],\n  \"report\": \"Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1710
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 4169,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "fake_kyc",
+            "language": "en"
+          },
+          "red_flags": [
+            {
+              "flag": "Urgent threat to block account",
+              "evidence": "your account will be blocked within 24 hours",
+              "why_risky": "Scammers use fake deadlines to make you panic and act without thinking."
+            },
+            {
+              "flag": "Suspicious link for KYC",
+              "evidence": "Update your KYC now: http://bit.ly/sbi-kyc-upd8",
+              "why_risky": "Official banks do not use shortened links like bit.ly to collect your personal information."
+            },
+            {
+              "flag": "Generic greeting",
+              "evidence": "Dear Customer",
+              "why_risky": "Real banks usually address you by your registered name instead of a generic label."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message is a scam. It is a fake KYC alert designed to steal your personal information by creating a false sense of urgency.",
+            "do_now": [
+              "Delete the message immediately.",
+              "If you are worried about your account, visit your bank branch in person or use their official app.",
+              "Block the sender's number."
+            ],
+            "never_do": [
+              "Do not click on any links provided in the message.",
+              "Do not share your bank account details, OTP, or PIN with anyone.",
+              "Do not reply to the message."
+            ],
+            "report": "Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already lost money, call 1930 and your bank immediately."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 918
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Urgent threat to block account\",\n    \"evidence\": \"your account will be blocked within 24 hours\",\n    \"why_risky\": \"Scammers use fake deadlines to make you panic and act without thinking.\"\n  },\n  {\n    \"flag\": \"Suspicious link for KYC\",\n    \"evidence\": \"Update your KYC now: http://bit.ly/sbi-kyc-upd8\",\n    \"why_risky\": \"Official banks do not use shortened links like bit.ly to collect your personal information.\"\n  },\n  {\n    \"flag\": \"Generic greeting\",\n    \"evidence\": \"Dear Customer\",\n    \"why_risky\": \"Real banks usually address you by your registered name instead of a generic label.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1561
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message is a scam. It is a fake KYC alert designed to steal your personal information by creating a false sense of urgency.\",\n  \"do_now\": [\n    \"Delete the message immediately.\",\n    \"If you are worried about your account, visit your bank branch in person or use their official app.\",\n    \"Block the sender's number.\"\n  ],\n  \"never_do\": [\n    \"Do not click on any links provided in the message.\",\n    \"Do not share your bank account details, OTP, or PIN with anyone.\",\n    \"Do not reply to the message.\"\n  ],\n  \"report\": \"Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already lost money, call 1930 and your bank immediately.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1685
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N2",
+      "type": "normal",
+      "description": "UPI collect request: receive Rs 5000, enter PIN",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "error",
+          "error": "Gemini request failed: {\"error\":{\"code\":504,\"message\":\"Deadline expired before operation could complete.\",\"status\":\"DEADLINE_EXCEEDED\"}}",
+          "latency_ms": 28939
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 18861,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "collect_request",
+            "language": "en"
+          },
+          "red_flags": [
+            {
+              "flag": "Requesting money instead of sending",
+              "evidence": "approve the collect request",
+              "why_risky": "A collect request is a command to send money from your account, not to receive it."
+            },
+            {
+              "flag": "Entering PIN sends money",
+              "evidence": "enter your UPI PIN",
+              "why_risky": "You only need to enter your UPI PIN when you are sending money to someone, never to receive it."
+            },
+            {
+              "flag": "False sense of urgency",
+              "evidence": "Offer valid for 10 minutes only",
+              "why_risky": "Scammers use time limits to pressure you into acting quickly without thinking."
+            },
+            {
+              "flag": "Unsolicited reward notification",
+              "evidence": "Congratulations! You have received ₹5000 from PhonePe Rewards",
+              "why_risky": "Unexpected messages claiming you have won or received money are almost always scams."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This is a scam. The message is trying to trick you into sending money from your account instead of receiving it.",
+            "do_now": [
+              "Delete the message immediately.",
+              "Block the sender's number.",
+              "Ignore any further messages from this sender."
+            ],
+            "never_do": [
+              "Never enter your UPI PIN to receive money.",
+              "Do not click any links or approve any collect requests.",
+              "Never share your PIN, OTP, or bank details with anyone."
+            ],
+            "report": "Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already lost money, contact your bank immediately."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"collect_request\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 5163
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Requesting money instead of sending\",\n    \"evidence\": \"approve the collect request\",\n    \"why_risky\": \"A collect request is a command to send money from your account, not to receive it.\"\n  },\n  {\n    \"flag\": \"Entering PIN sends money\",\n    \"evidence\": \"enter your UPI PIN\",\n    \"why_risky\": \"You only need to enter your UPI PIN when you are sending money to someone, never to receive it.\"\n  },\n  {\n    \"flag\": \"False sense of urgency\",\n    \"evidence\": \"Offer valid for 10 minutes only\",\n    \"why_risky\": \"Scammers use time limits to pressure you into acting quickly without thinking.\"\n  },\n  {\n    \"flag\": \"Unsolicited reward notification\",\n    \"evidence\": \"Congratulations! You have received ₹5000 from PhonePe Rewards\",\n    \"why_risky\": \"Unexpected messages claiming you have won or received money are almost always scams.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1568
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This is a scam. The message is trying to trick you into sending money from your account instead of receiving it.\",\n  \"do_now\": [\n    \"Delete the message immediately.\",\n    \"Block the sender's number.\",\n    \"Ignore any further messages from this sender.\"\n  ],\n  \"never_do\": [\n    \"Never enter your UPI PIN to receive money.\",\n    \"Do not click any links or approve any collect requests.\",\n    \"Never share your PIN, OTP, or bank details with anyone.\"\n  ],\n  \"report\": \"Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already lost money, contact your bank immediately.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 12127
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N3",
+      "type": "normal",
+      "description": "Fake electricity disconnection",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 11151,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 98,
+            "scam_type": "impersonation",
+            "language": "en"
+          },
+          "red_flags": [
+            {
+              "flag": "Urgent threat of service disconnection",
+              "evidence": "your electricity power will be disconnected tonight at 9.30 PM",
+              "why_risky": "Scammers use fake deadlines and threats to make you panic so you act without thinking."
+            },
+            {
+              "flag": "Directing you to a personal number",
+              "evidence": "Please immediately contact our electricity officer 9876543210",
+              "why_risky": "Official electricity departments do not ask you to call a personal mobile number to resolve billing issues."
+            },
+            {
+              "flag": "Vague reason for disconnection",
+              "evidence": "because your previous month bill was not updated",
+              "why_risky": "This is a common excuse used by scammers to trick you into sharing payment details or personal information."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This is a scam message designed to steal your money by creating fake panic. Do not trust this message as electricity departments never ask you to call personal mobile numbers.",
+            "do_now": [
+              "Delete the message immediately.",
+              "Block the sender's number on your phone.",
+              "Check your official electricity bill status only through the official app or website."
+            ],
+            "never_do": [
+              "Do not call the mobile number provided in the message.",
+              "Never share your bank details, OTP, or UPI PIN with anyone.",
+              "Do not click on any links or download any apps sent by strangers."
+            ],
+            "report": "Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already lost money, call 1930 and your bank immediately."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 98,\n  \"scam_type\": \"impersonation\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 918
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Urgent threat of service disconnection\",\n    \"evidence\": \"your electricity power will be disconnected tonight at 9.30 PM\",\n    \"why_risky\": \"Scammers use fake deadlines and threats to make you panic so you act without thinking.\"\n  },\n  {\n    \"flag\": \"Directing you to a personal number\",\n    \"evidence\": \"Please immediately contact our electricity officer 9876543210\",\n    \"why_risky\": \"Official electricity departments do not ask you to call a personal mobile number to resolve billing issues.\"\n  },\n  {\n    \"flag\": \"Vague reason for disconnection\",\n    \"evidence\": \"because your previous month bill was not updated\",\n    \"why_risky\": \"This is a common excuse used by scammers to trick you into sharing payment details or personal information.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 8795
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This is a scam message designed to steal your money by creating fake panic. Do not trust this message as electricity departments never ask you to call personal mobile numbers.\",\n  \"do_now\": [\n    \"Delete the message immediately.\",\n    \"Block the sender's number on your phone.\",\n    \"Check your official electricity bill status only through the official app or website.\"\n  ],\n  \"never_do\": [\n    \"Do not call the mobile number provided in the message.\",\n    \"Never share your bank details, OTP, or UPI PIN with anyone.\",\n    \"Do not click on any links or download any apps sent by strangers.\"\n  ],\n  \"report\": \"Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already lost money, call 1930 and your bank immediately.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1436
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 3548,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 98,
+            "scam_type": "impersonation",
+            "language": "en"
+          },
+          "red_flags": [
+            {
+              "flag": "Urgent threat of service disconnection",
+              "evidence": "your electricity power will be disconnected tonight at 9.30 PM",
+              "why_risky": "Scammers use fake deadlines and threats to make you panic so you act without thinking."
+            },
+            {
+              "flag": "Directing you to a personal number",
+              "evidence": "Please immediately contact our electricity officer 9876543210",
+              "why_risky": "Official electricity departments provide customer care numbers on bills, not personal mobile numbers for urgent calls."
+            },
+            {
+              "flag": "Vague reason for disconnection",
+              "evidence": "because your previous month bill was not updated",
+              "why_risky": "This is a common excuse used by scammers to trick people into believing there is a payment error."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message is a scam. It is a fake threat designed to panic you into sending money to a fraudster.",
+            "do_now": [
+              "Delete the message immediately.",
+              "Block the sender's number on your phone.",
+              "Check your official electricity bill for the correct customer care number if you are worried."
+            ],
+            "never_do": [
+              "Do not call the mobile number provided in the message.",
+              "Do not share any bank details, OTPs, or make any payments.",
+              "Do not click on any links or download any apps sent by them."
+            ],
+            "report": "Report this incident at https://cybercrime.gov.in or call the 1930 cyber-crime helpline."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 98,\n  \"scam_type\": \"impersonation\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1053
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Urgent threat of service disconnection\",\n    \"evidence\": \"your electricity power will be disconnected tonight at 9.30 PM\",\n    \"why_risky\": \"Scammers use fake deadlines and threats to make you panic so you act without thinking.\"\n  },\n  {\n    \"flag\": \"Directing you to a personal number\",\n    \"evidence\": \"Please immediately contact our electricity officer 9876543210\",\n    \"why_risky\": \"Official electricity departments provide customer care numbers on bills, not personal mobile numbers for urgent calls.\"\n  },\n  {\n    \"flag\": \"Vague reason for disconnection\",\n    \"evidence\": \"because your previous month bill was not updated\",\n    \"why_risky\": \"This is a common excuse used by scammers to trick people into believing there is a payment error.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1315
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message is a scam. It is a fake threat designed to panic you into sending money to a fraudster.\",\n  \"do_now\": [\n    \"Delete the message immediately.\",\n    \"Block the sender's number on your phone.\",\n    \"Check your official electricity bill for the correct customer care number if you are worried.\"\n  ],\n  \"never_do\": [\n    \"Do not call the mobile number provided in the message.\",\n    \"Do not share any bank details, OTPs, or make any payments.\",\n    \"Do not click on any links or download any apps sent by them.\"\n  ],\n  \"report\": \"Report this incident at https://cybercrime.gov.in or call the 1930 cyber-crime helpline.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1178
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N4",
+      "type": "normal",
+      "description": "Job offer asking for a registration fee",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 3621,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "job_offer",
+            "language": "en"
+          },
+          "red_flags": [
+            {
+              "flag": "Fee to start working",
+              "evidence": "Pay a one-time registration fee of ₹499 to start",
+              "why_risky": "Legitimate employers never ask you to pay money to get a job."
+            },
+            {
+              "flag": "Unrealistic daily earnings",
+              "evidence": "Earn ₹3000-₹8000 daily by liking YouTube videos",
+              "why_risky": "Tasks like liking videos do not pay high amounts, and this is a common lure for scams."
+            },
+            {
+              "flag": "Suspicious contact method",
+              "evidence": "WhatsApp HR Priya: wa.me/919812345678",
+              "why_risky": "Professional companies use official websites or emails for hiring, not personal WhatsApp links."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This is a scam. Legitimate companies will never ask you to pay a registration fee to start working.",
+            "do_now": [
+              "Block the sender on WhatsApp immediately.",
+              "Delete the message from your phone.",
+              "Ignore any further messages from this person."
+            ],
+            "never_do": [
+              "Do not pay any money or registration fees.",
+              "Do not share your bank details, UPI PIN, or personal documents.",
+              "Do not click on any links provided by the sender."
+            ],
+            "report": "Report this incident at https://cybercrime.gov.in or call the 1930 cyber-crime helpline."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"job_offer\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1038
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Fee to start working\",\n    \"evidence\": \"Pay a one-time registration fee of ₹499 to start\",\n    \"why_risky\": \"Legitimate employers never ask you to pay money to get a job.\"\n  },\n  {\n    \"flag\": \"Unrealistic daily earnings\",\n    \"evidence\": \"Earn ₹3000-₹8000 daily by liking YouTube videos\",\n    \"why_risky\": \"Tasks like liking videos do not pay high amounts, and this is a common lure for scams.\"\n  },\n  {\n    \"flag\": \"Suspicious contact method\",\n    \"evidence\": \"WhatsApp HR Priya: wa.me/919812345678\",\n    \"why_risky\": \"Professional companies use official websites or emails for hiring, not personal WhatsApp links.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1248
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This is a scam. Legitimate companies will never ask you to pay a registration fee to start working.\",\n  \"do_now\": [\n    \"Block the sender on WhatsApp immediately.\",\n    \"Delete the message from your phone.\",\n    \"Ignore any further messages from this person.\"\n  ],\n  \"never_do\": [\n    \"Do not pay any money or registration fees.\",\n    \"Do not share your bank details, UPI PIN, or personal documents.\",\n    \"Do not click on any links provided by the sender.\"\n  ],\n  \"report\": \"Report this incident at https://cybercrime.gov.in or call the 1930 cyber-crime helpline.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1331
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 3761,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "job_offer",
+            "language": "en"
+          },
+          "red_flags": [
+            {
+              "flag": "Fee to start working",
+              "evidence": "Pay a one-time registration fee of ₹499 to start",
+              "why_risky": "Legitimate employers never ask you to pay money to get a job."
+            },
+            {
+              "flag": "Unrealistic daily earnings",
+              "evidence": "Earn ₹3000-₹8000 daily by liking YouTube videos",
+              "why_risky": "Tasks like liking videos do not pay high amounts, and this is a common lure to trick you."
+            },
+            {
+              "flag": "Suspicious contact method",
+              "evidence": "WhatsApp HR Priya: wa.me/919812345678",
+              "why_risky": "Professional companies use official websites or email domains, not random WhatsApp links to hire staff."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This is a scam. Legitimate companies will never ask you to pay a registration fee to start working.",
+            "do_now": [
+              "Block the sender immediately on WhatsApp.",
+              "Delete the message from your phone.",
+              "Ignore any further messages from this number."
+            ],
+            "never_do": [
+              "Never pay any money to get a job.",
+              "Do not click any links or share personal documents.",
+              "Never share your bank details or UPI PIN with strangers."
+            ],
+            "report": "Report this incident at https://cybercrime.gov.in or call the 1930 cyber-crime helpline."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"job_offer\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1103
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Fee to start working\",\n    \"evidence\": \"Pay a one-time registration fee of ₹499 to start\",\n    \"why_risky\": \"Legitimate employers never ask you to pay money to get a job.\"\n  },\n  {\n    \"flag\": \"Unrealistic daily earnings\",\n    \"evidence\": \"Earn ₹3000-₹8000 daily by liking YouTube videos\",\n    \"why_risky\": \"Tasks like liking videos do not pay high amounts, and this is a common lure to trick you.\"\n  },\n  {\n    \"flag\": \"Suspicious contact method\",\n    \"evidence\": \"WhatsApp HR Priya: wa.me/919812345678\",\n    \"why_risky\": \"Professional companies use official websites or email domains, not random WhatsApp links to hire staff.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1314
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This is a scam. Legitimate companies will never ask you to pay a registration fee to start working.\",\n  \"do_now\": [\n    \"Block the sender immediately on WhatsApp.\",\n    \"Delete the message from your phone.\",\n    \"Ignore any further messages from this number.\"\n  ],\n  \"never_do\": [\n    \"Never pay any money to get a job.\",\n    \"Do not click any links or share personal documents.\",\n    \"Never share your bank details or UPI PIN with strangers.\"\n  ],\n  \"report\": \"Report this incident at https://cybercrime.gov.in or call the 1930 cyber-crime helpline.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1340
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N5",
+      "type": "normal",
+      "description": "Genuine HDFC UPI debit alert",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "safe",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 6969,
+          "classification": {
+            "verdict": "safe",
+            "confidence": 95,
+            "scam_type": "none",
+            "language": "en"
+          },
+          "red_flags": [],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message is safe and does not appear to be a scam. You can ignore it or delete it as it poses no threat to your security.",
+            "do_now": [
+              "You can safely delete the message.",
+              "Continue to stay alert for any suspicious links or requests for money in the future."
+            ],
+            "never_do": [
+              "Never share your UPI PIN, OTP, or bank passwords with anyone.",
+              "Do not click on unknown links even if a message seems harmless."
+            ],
+            "report": ""
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"safe\",\n  \"confidence\": 95,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 948
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 745
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message is safe and does not appear to be a scam. You can ignore it or delete it as it poses no threat to your security.\",\n  \"do_now\": [\n    \"You can safely delete the message.\",\n    \"Continue to stay alert for any suspicious links or requests for money in the future.\"\n  ],\n  \"never_do\": [\n    \"Never share your UPI PIN, OTP, or bank passwords with anyone.\",\n    \"Do not click on unknown links even if a message seems harmless.\"\n  ],\n  \"report\": \"\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 5274
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "verdict": "safe",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 15899,
+          "classification": {
+            "verdict": "safe",
+            "confidence": 95,
+            "scam_type": "none",
+            "language": "en"
+          },
+          "red_flags": [],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message is safe and does not appear to be a scam. You can ignore it or delete it as it poses no threat to your security.",
+            "do_now": [
+              "You can safely delete the message.",
+              "Continue to be cautious with unknown links in the future."
+            ],
+            "never_do": [
+              "Never share your UPI PIN, OTP, or passwords with anyone.",
+              "Do not click on suspicious links even if the message seems harmless."
+            ],
+            "report": ""
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"safe\",\n  \"confidence\": 95,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1056
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 3067
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message is safe and does not appear to be a scam. You can ignore it or delete it as it poses no threat to your security.\",\n  \"do_now\": [\n    \"You can safely delete the message.\",\n    \"Continue to be cautious with unknown links in the future.\"\n  ],\n  \"never_do\": [\n    \"Never share your UPI PIN, OTP, or passwords with anyone.\",\n    \"Do not click on suspicious links even if the message seems harmless.\"\n  ],\n  \"report\": \"\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 11773
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "N6",
+      "type": "normal",
+      "description": "Genuine bank OTP that says do not share",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "safe",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 71417,
+          "classification": {
+            "verdict": "safe",
+            "confidence": 100,
+            "scam_type": "none",
+            "language": "en"
+          },
+          "red_flags": [],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message appears to be safe and does not contain any signs of a scam. You can proceed with caution as usual.",
+            "do_now": [
+              "Verify the sender's identity if you are unsure.",
+              "Keep your personal information and banking details private.",
+              "Use official apps or websites for any transactions."
+            ],
+            "never_do": [
+              "Never share your UPI PIN, OTP, or passwords with anyone.",
+              "Do not click on suspicious links from unknown sources.",
+              "Do not download apps suggested by strangers."
+            ],
+            "report": ""
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"safe\",\n  \"confidence\": 100,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 60669
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 9299
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message appears to be safe and does not contain any signs of a scam. You can proceed with caution as usual.\",\n  \"do_now\": [\n    \"Verify the sender's identity if you are unsure.\",\n    \"Keep your personal information and banking details private.\",\n    \"Use official apps or websites for any transactions.\"\n  ],\n  \"never_do\": [\n    \"Never share your UPI PIN, OTP, or passwords with anyone.\",\n    \"Do not click on suspicious links from unknown sources.\",\n    \"Do not download apps suggested by strangers.\"\n  ],\n  \"report\": \"\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1446
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "verdict": "safe",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 11901,
+          "classification": {
+            "verdict": "safe",
+            "confidence": 100,
+            "scam_type": "none",
+            "language": "en"
+          },
+          "red_flags": [],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message appears to be safe and does not show any signs of a scam. You can proceed normally, but always stay cautious with unexpected messages.",
+            "do_now": [
+              "Verify the sender's identity if you are unsure.",
+              "Keep your banking apps and phone software updated.",
+              "Always use official bank apps for any transactions."
+            ],
+            "never_do": [
+              "Never share your UPI PIN, OTP, or passwords with anyone.",
+              "Do not click on suspicious links from unknown numbers.",
+              "Never download apps suggested by strangers."
+            ],
+            "report": ""
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"safe\",\n  \"confidence\": 100,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1041
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 5842
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message appears to be safe and does not show any signs of a scam. You can proceed normally, but always stay cautious with unexpected messages.\",\n  \"do_now\": [\n    \"Verify the sender's identity if you are unsure.\",\n    \"Keep your banking apps and phone software updated.\",\n    \"Always use official bank apps for any transactions.\"\n  ],\n  \"never_do\": [\n    \"Never share your UPI PIN, OTP, or passwords with anyone.\",\n    \"Do not click on suspicious links from unknown numbers.\",\n    \"Never download apps suggested by strangers.\"\n  ],\n  \"report\": \"\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 5015
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E1",
+      "type": "edge",
+      "description": "Hinglish KYC scam",
+      "expected_verdict": "scam",
+      "expected_language": "hinglish",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "hinglish",
+          "json_valid": true,
+          "latency_ms": 6948,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "fake_kyc",
+            "language": "hinglish"
+          },
+          "red_flags": [
+            {
+              "flag": "Threat of account closure",
+              "evidence": "warna aapka bank account aaj raat band ho jayega",
+              "why_risky": "Scammers use urgent threats to make you panic and act without thinking."
+            },
+            {
+              "flag": "Suspicious link",
+              "evidence": "http://kyc-update-now.in/verify",
+              "why_risky": "Official banks do not use unofficial, generic-looking websites to collect your sensitive KYC information."
+            },
+            {
+              "flag": "False urgency",
+              "evidence": "turant link pe click karo",
+              "why_risky": "Demanding immediate action is a common tactic to prevent you from verifying the message's authenticity."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "Yeh ek scam hai. Bank kabhi bhi SMS ya WhatsApp ke zariye aisi dhamki nahi dete aur na hi kisi anjaan link par KYC update karne ko kehte hain.",
+            "do_now": [
+              "Is message ko turant delete kar dein.",
+              "Bank ke official app ya website par login karke apna KYC status check karein.",
+              "Agar koi shaq ho, toh apne bank ki branch mein jakar baat karein."
+            ],
+            "never_do": [
+              "Message mein diye gaye kisi bhi link par click na karein.",
+              "Apna bank account details, OTP, ya PIN kisi ke saath share na karein.",
+              "Dhamki se darr kar koi bhi jaldbazi mein kadam na uthayein."
+            ],
+            "report": "Is scam ki report https://cybercrime.gov.in par karein ya 1930 helpline number par call karein."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"hinglish\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 4197
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Threat of account closure\",\n    \"evidence\": \"warna aapka bank account aaj raat band ho jayega\",\n    \"why_risky\": \"Scammers use urgent threats to make you panic and act without thinking.\"\n  },\n  {\n    \"flag\": \"Suspicious link\",\n    \"evidence\": \"http://kyc-update-now.in/verify\",\n    \"why_risky\": \"Official banks do not use unofficial, generic-looking websites to collect your sensitive KYC information.\"\n  },\n  {\n    \"flag\": \"False urgency\",\n    \"evidence\": \"turant link pe click karo\",\n    \"why_risky\": \"Demanding immediate action is a common tactic to prevent you from verifying the message's authenticity.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1027
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"Yeh ek scam hai. Bank kabhi bhi SMS ya WhatsApp ke zariye aisi dhamki nahi dete aur na hi kisi anjaan link par KYC update karne ko kehte hain.\",\n  \"do_now\": [\n    \"Is message ko turant delete kar dein.\",\n    \"Bank ke official app ya website par login karke apna KYC status check karein.\",\n    \"Agar koi shaq ho, toh apne bank ki branch mein jakar baat karein.\"\n  ],\n  \"never_do\": [\n    \"Message mein diye gaye kisi bhi link par click na karein.\",\n    \"Apna bank account details, OTP, ya PIN kisi ke saath share na karein.\",\n    \"Dhamki se darr kar koi bhi jaldbazi mein kadam na uthayein.\"\n  ],\n  \"report\": \"Is scam ki report https://cybercrime.gov.in par karein ya 1930 helpline number par call karein.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1721
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "hinglish",
+          "json_valid": true,
+          "latency_ms": 7237,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "fake_kyc",
+            "language": "hinglish"
+          },
+          "red_flags": [
+            {
+              "flag": "Threat of account closure",
+              "evidence": "warna aapka bank account aaj raat band ho jayega",
+              "why_risky": "Scammers use urgent threats to make you panic and act without thinking."
+            },
+            {
+              "flag": "Suspicious link",
+              "evidence": "http://kyc-update-now.in/verify",
+              "why_risky": "Official banks do not use unofficial, generic-looking websites to collect your sensitive KYC information."
+            },
+            {
+              "flag": "False sense of urgency",
+              "evidence": "turant link pe click karo",
+              "why_risky": "Demanding immediate action is a common tactic to prevent you from verifying the message's authenticity."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "Yeh message ek scam hai aur bilkul safe nahi hai. Scammers aapko darakar aapki personal bank details churana chahte hain.",
+            "do_now": [
+              "Is message ko turant delete kar dein.",
+              "Agar aapko shak hai, toh apne bank ki official app ya website par login karke KYC status check karein.",
+              "Apne bank ke official customer care number par call karke confirm karein."
+            ],
+            "never_do": [
+              "Message mein diye gaye kisi bhi link par click na karein.",
+              "Apna bank account number, OTP, ya PIN kisi ke saath share na karein.",
+              "Kisi bhi anjaan message ke dabav mein aakar jaldi mein koi kadam na uthayein."
+            ],
+            "report": "Is scam ko https://cybercrime.gov.in par report karein ya 1930 helpline par call karein. Agar paise kat gaye hain, toh turant 1930 aur apne bank ko inform karein."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"hinglish\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 3424
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Threat of account closure\",\n    \"evidence\": \"warna aapka bank account aaj raat band ho jayega\",\n    \"why_risky\": \"Scammers use urgent threats to make you panic and act without thinking.\"\n  },\n  {\n    \"flag\": \"Suspicious link\",\n    \"evidence\": \"http://kyc-update-now.in/verify\",\n    \"why_risky\": \"Official banks do not use unofficial, generic-looking websites to collect your sensitive KYC information.\"\n  },\n  {\n    \"flag\": \"False sense of urgency\",\n    \"evidence\": \"turant link pe click karo\",\n    \"why_risky\": \"Demanding immediate action is a common tactic to prevent you from verifying the message's authenticity.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 2215
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"Yeh message ek scam hai aur bilkul safe nahi hai. Scammers aapko darakar aapki personal bank details churana chahte hain.\",\n  \"do_now\": [\n    \"Is message ko turant delete kar dein.\",\n    \"Agar aapko shak hai, toh apne bank ki official app ya website par login karke KYC status check karein.\",\n    \"Apne bank ke official customer care number par call karke confirm karein.\"\n  ],\n  \"never_do\": [\n    \"Message mein diye gaye kisi bhi link par click na karein.\",\n    \"Apna bank account number, OTP, ya PIN kisi ke saath share na karein.\",\n    \"Kisi bhi anjaan message ke dabav mein aakar jaldi mein koi kadam na uthayein.\"\n  ],\n  \"report\": \"Is scam ko https://cybercrime.gov.in par report karein ya 1930 helpline par call karein. Agar paise kat gaye hain, toh turant 1930 aur apne bank ko inform karein.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1595
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E2",
+      "type": "edge",
+      "description": "Pure Hindi (Devanagari) lottery scam",
+      "expected_verdict": "scam",
+      "expected_language": "hi",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "hi",
+          "json_valid": true,
+          "latency_ms": 53931,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "lottery",
+            "language": "hi"
+          },
+          "red_flags": [
+            {
+              "flag": "Fee to release a prize",
+              "evidence": "इनाम पाने के लिए ₹4,500 प्रोसेसिंग शुल्क",
+              "why_risky": "Genuine lotteries never ask you to pay a fee to receive your winnings."
+            },
+            {
+              "flag": "Request for OTP",
+              "evidence": "कॉल आने पर अपना OTP बताएं",
+              "why_risky": "Sharing an OTP allows scammers to take control of your bank account or digital wallet."
+            },
+            {
+              "flag": "Unsolicited lottery win",
+              "evidence": "आपने KBC लॉटरी में ₹25,00,000 जीते हैं",
+              "why_risky": "You cannot win a lottery you never entered, and KBC does not contact winners via SMS."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "यह एक धोखाधड़ी है। असली लॉटरी कभी भी इनाम देने के लिए पैसे नहीं मांगती और न ही OTP पूछती है।",
+            "do_now": [
+              "इस संदेश को तुरंत डिलीट कर दें।",
+              "भेजने वाले का नंबर ब्लॉक कर दें।",
+              "किसी भी लिंक पर क्लिक न करें और न ही कोई ऐप डाउनलोड करें।"
+            ],
+            "never_do": [
+              "किसी को भी अपना OTP, पिन या बैंक विवरण न दें।",
+              "इनाम पाने के लिए कोई भी प्रोसेसिंग शुल्क या पैसा न भरें।",
+              "धोखेबाजों के साथ कोई भी व्यक्तिगत जानकारी साझा न करें।"
+            ],
+            "report": "इसकी शिकायत https://cybercrime.gov.in पर करें या 1930 साइबर-क्राइम हेल्पलाइन पर कॉल करें।"
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"lottery\",\n  \"language\": \"hi\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 19983
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Fee to release a prize\",\n    \"evidence\": \"इनाम पाने के लिए ₹4,500 प्रोसेसिंग शुल्क\",\n    \"why_risky\": \"Genuine lotteries never ask you to pay a fee to receive your winnings.\"\n  },\n  {\n    \"flag\": \"Request for OTP\",\n    \"evidence\": \"कॉल आने पर अपना OTP बताएं\",\n    \"why_risky\": \"Sharing an OTP allows scammers to take control of your bank account or digital wallet.\"\n  },\n  {\n    \"flag\": \"Unsolicited lottery win\",\n    \"evidence\": \"आपने KBC लॉटरी में ₹25,00,000 जीते हैं\",\n    \"why_risky\": \"You cannot win a lottery you never entered, and KBC does not contact winners via SMS.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 17076
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"यह एक धोखाधड़ी है। असली लॉटरी कभी भी इनाम देने के लिए पैसे नहीं मांगती और न ही OTP पूछती है।\",\n  \"do_now\": [\n    \"इस संदेश को तुरंत डिलीट कर दें।\",\n    \"भेजने वाले का नंबर ब्लॉक कर दें।\",\n    \"किसी भी लिंक पर क्लिक न करें और न ही कोई ऐप डाउनलोड करें।\"\n  ],\n  \"never_do\": [\n    \"किसी को भी अपना OTP, पिन या बैंक विवरण न दें।\",\n    \"इनाम पाने के लिए कोई भी प्रोसेसिंग शुल्क या पैसा न भरें।\",\n    \"धोखेबाजों के साथ कोई भी व्यक्तिगत जानकारी साझा न करें।\"\n  ],\n  \"report\": \"इसकी शिकायत https://cybercrime.gov.in पर करें या 1930 साइबर-क्राइम हेल्पलाइन पर कॉल करें।\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 16869
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "hi",
+          "json_valid": true,
+          "latency_ms": 24751,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "lottery",
+            "language": "hi"
+          },
+          "red_flags": [
+            {
+              "flag": "Fee to release a prize",
+              "evidence": "इनाम पाने के लिए ₹4,500 प्रोसेसिंग शुल्क",
+              "why_risky": "Genuine lotteries never ask you to pay money upfront to receive a prize."
+            },
+            {
+              "flag": "Request for sensitive OTP",
+              "evidence": "कॉल आने पर अपना OTP बताएं",
+              "why_risky": "Sharing an OTP allows scammers to take control of your bank account or digital wallet."
+            },
+            {
+              "flag": "Unsolicited lottery win",
+              "evidence": "आपने KBC लॉटरी में ₹25,00,000 जीते हैं",
+              "why_risky": "You cannot win a lottery you never entered, and KBC does not conduct such draws via SMS."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "यह एक धोखाधड़ी है और बिल्कुल भी सुरक्षित नहीं है। असली लॉटरी कभी भी इनाम देने के लिए पैसे नहीं मांगती है।",
+            "do_now": [
+              "इस संदेश को तुरंत डिलीट कर दें।",
+              "भेजने वाले का नंबर ब्लॉक कर दें।",
+              "अगर आपने पैसे दिए हैं, तो तुरंत अपने बैंक को सूचित करें।"
+            ],
+            "never_do": [
+              "किसी भी अनजान व्यक्ति को अपना OTP या बैंक विवरण न दें।",
+              "इनाम पाने के लिए कोई भी प्रोसेसिंग शुल्क न भरें।",
+              "संदेश में दिए गए किसी भी लिंक पर क्लिक न करें।"
+            ],
+            "report": "इस धोखाधड़ी की रिपोर्ट https://cybercrime.gov.in पर करें या 1930 साइबर-क्राइम हेल्पलाइन पर कॉल करें।"
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"lottery\",\n  \"language\": \"hi\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1469
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Fee to release a prize\",\n    \"evidence\": \"इनाम पाने के लिए ₹4,500 प्रोसेसिंग शुल्क\",\n    \"why_risky\": \"Genuine lotteries never ask you to pay money upfront to receive a prize.\"\n  },\n  {\n    \"flag\": \"Request for sensitive OTP\",\n    \"evidence\": \"कॉल आने पर अपना OTP बताएं\",\n    \"why_risky\": \"Sharing an OTP allows scammers to take control of your bank account or digital wallet.\"\n  },\n  {\n    \"flag\": \"Unsolicited lottery win\",\n    \"evidence\": \"आपने KBC लॉटरी में ₹25,00,000 जीते हैं\",\n    \"why_risky\": \"You cannot win a lottery you never entered, and KBC does not conduct such draws via SMS.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 9954
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"यह एक धोखाधड़ी है और बिल्कुल भी सुरक्षित नहीं है। असली लॉटरी कभी भी इनाम देने के लिए पैसे नहीं मांगती है।\",\n  \"do_now\": [\n    \"इस संदेश को तुरंत डिलीट कर दें।\",\n    \"भेजने वाले का नंबर ब्लॉक कर दें।\",\n    \"अगर आपने पैसे दिए हैं, तो तुरंत अपने बैंक को सूचित करें।\"\n  ],\n  \"never_do\": [\n    \"किसी भी अनजान व्यक्ति को अपना OTP या बैंक विवरण न दें।\",\n    \"इनाम पाने के लिए कोई भी प्रोसेसिंग शुल्क न भरें।\",\n    \"संदेश में दिए गए किसी भी लिंक पर क्लिक न करें।\"\n  ],\n  \"report\": \"इस धोखाधड़ी की रिपोर्ट https://cybercrime.gov.in पर करें या 1930 साइबर-क्राइम हेल्पलाइन पर कॉल करें।\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 13324
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E3",
+      "type": "edge",
+      "description": "Lookalike domain sbi-kyc-update.in",
+      "expected_verdict": "scam",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 9445,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "fake_kyc",
+            "language": "en"
+          },
+          "red_flags": [
+            {
+              "flag": "Suspicious link",
+              "evidence": "https://sbi-kyc-update.in/login",
+              "why_risky": "This is not an official SBI website and is designed to steal your login credentials."
+            },
+            {
+              "flag": "Urgent threat to create panic",
+              "evidence": "Re-activate within 2 hours",
+              "why_risky": "Scammers use short deadlines to pressure you into acting quickly without thinking."
+            },
+            {
+              "flag": "Threat of account blockage",
+              "evidence": "to avoid permanent block",
+              "why_risky": "Banks do not threaten to permanently block your account via SMS to force you to click a link."
+            },
+            {
+              "flag": "Fake account suspension claim",
+              "evidence": "Your YONO account has been suspended due to incomplete PAN verification",
+              "why_risky": "This is a common tactic used to trick you into providing sensitive personal information."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This is a scam message designed to steal your bank login details. It is not safe and you should ignore it completely.",
+            "do_now": [
+              "Delete the message immediately.",
+              "Block the sender's number.",
+              "If you are worried about your account, visit your bank branch in person or use their official app."
+            ],
+            "never_do": [
+              "Do not click on any links provided in the message.",
+              "Do not share your bank password, OTP, or PAN details with anyone.",
+              "Do not call any phone numbers mentioned in the suspicious message."
+            ],
+            "report": "Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 7073
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Suspicious link\",\n    \"evidence\": \"https://sbi-kyc-update.in/login\",\n    \"why_risky\": \"This is not an official SBI website and is designed to steal your login credentials.\"\n  },\n  {\n    \"flag\": \"Urgent threat to create panic\",\n    \"evidence\": \"Re-activate within 2 hours\",\n    \"why_risky\": \"Scammers use short deadlines to pressure you into acting quickly without thinking.\"\n  },\n  {\n    \"flag\": \"Threat of account blockage\",\n    \"evidence\": \"to avoid permanent block\",\n    \"why_risky\": \"Banks do not threaten to permanently block your account via SMS to force you to click a link.\"\n  },\n  {\n    \"flag\": \"Fake account suspension claim\",\n    \"evidence\": \"Your YONO account has been suspended due to incomplete PAN verification\",\n    \"why_risky\": \"This is a common tactic used to trick you into providing sensitive personal information.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1311
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This is a scam message designed to steal your bank login details. It is not safe and you should ignore it completely.\",\n  \"do_now\": [\n    \"Delete the message immediately.\",\n    \"Block the sender's number.\",\n    \"If you are worried about your account, visit your bank branch in person or use their official app.\"\n  ],\n  \"never_do\": [\n    \"Do not click on any links provided in the message.\",\n    \"Do not share your bank password, OTP, or PAN details with anyone.\",\n    \"Do not call any phone numbers mentioned in the suspicious message.\"\n  ],\n  \"report\": \"Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1058
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 6407,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "fake_kyc",
+            "language": "en"
+          },
+          "red_flags": [
+            {
+              "flag": "Suspicious link",
+              "evidence": "https://sbi-kyc-update.in/login",
+              "why_risky": "This is not an official SBI website and is designed to steal your login credentials."
+            },
+            {
+              "flag": "Urgent threat to create panic",
+              "evidence": "Re-activate within 2 hours",
+              "why_risky": "Scammers use short deadlines to pressure you into acting quickly without thinking."
+            },
+            {
+              "flag": "Threat of account blockage",
+              "evidence": "to avoid permanent block",
+              "why_risky": "Banks do not threaten to permanently block your account via SMS to force you to click a link."
+            },
+            {
+              "flag": "False account suspension claim",
+              "evidence": "Your YONO account has been suspended",
+              "why_risky": "This is a common scare tactic used to trick you into providing sensitive information."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message is a scam. It is a fake KYC alert designed to steal your bank login details by creating false panic.",
+            "do_now": [
+              "Delete the message immediately.",
+              "If you are worried, open your official bank app or visit the bank branch directly.",
+              "Ignore any threats about your account being blocked."
+            ],
+            "never_do": [
+              "Do not click on any links provided in the SMS.",
+              "Never share your bank password, OTP, or PIN with anyone.",
+              "Do not reply to the sender or call any numbers mentioned in the message."
+            ],
+            "report": "Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already lost money, call 1930 and your bank immediately."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"fake_kyc\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 2872
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Suspicious link\",\n    \"evidence\": \"https://sbi-kyc-update.in/login\",\n    \"why_risky\": \"This is not an official SBI website and is designed to steal your login credentials.\"\n  },\n  {\n    \"flag\": \"Urgent threat to create panic\",\n    \"evidence\": \"Re-activate within 2 hours\",\n    \"why_risky\": \"Scammers use short deadlines to pressure you into acting quickly without thinking.\"\n  },\n  {\n    \"flag\": \"Threat of account blockage\",\n    \"evidence\": \"to avoid permanent block\",\n    \"why_risky\": \"Banks do not threaten to permanently block your account via SMS to force you to click a link.\"\n  },\n  {\n    \"flag\": \"False account suspension claim\",\n    \"evidence\": \"Your YONO account has been suspended\",\n    \"why_risky\": \"This is a common scare tactic used to trick you into providing sensitive information.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1711
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message is a scam. It is a fake KYC alert designed to steal your bank login details by creating false panic.\",\n  \"do_now\": [\n    \"Delete the message immediately.\",\n    \"If you are worried, open your official bank app or visit the bank branch directly.\",\n    \"Ignore any threats about your account being blocked.\"\n  ],\n  \"never_do\": [\n    \"Do not click on any links provided in the SMS.\",\n    \"Never share your bank password, OTP, or PIN with anyone.\",\n    \"Do not reply to the sender or call any numbers mentioned in the message.\"\n  ],\n  \"report\": \"Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already lost money, call 1930 and your bank immediately.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1823
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E4",
+      "type": "edge",
+      "description": "Genuine Amazon delivery message with a real-domain link",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "safe",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 11084,
+          "classification": {
+            "verdict": "safe",
+            "confidence": 95,
+            "scam_type": "none",
+            "language": "en"
+          },
+          "red_flags": [],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message appears to be safe and does not contain any signs of a scam. You can rest assured that there is no immediate threat to your account.",
+            "do_now": [
+              "You can safely ignore or delete the message.",
+              "Always keep your banking apps updated to the latest version.",
+              "Use strong, unique passwords for all your financial accounts."
+            ],
+            "never_do": [
+              "Never share your UPI PIN, OTP, or passwords with anyone.",
+              "Do not click on suspicious links even if the message seems safe.",
+              "Avoid downloading apps from unknown sources or links."
+            ],
+            "report": ""
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"safe\",\n  \"confidence\": 95,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 4669
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 4962
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message appears to be safe and does not contain any signs of a scam. You can rest assured that there is no immediate threat to your account.\",\n  \"do_now\": [\n    \"You can safely ignore or delete the message.\",\n    \"Always keep your banking apps updated to the latest version.\",\n    \"Use strong, unique passwords for all your financial accounts.\"\n  ],\n  \"never_do\": [\n    \"Never share your UPI PIN, OTP, or passwords with anyone.\",\n    \"Do not click on suspicious links even if the message seems safe.\",\n    \"Avoid downloading apps from unknown sources or links.\"\n  ],\n  \"report\": \"\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1450
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "verdict": "safe",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 8815,
+          "classification": {
+            "verdict": "safe",
+            "confidence": 95,
+            "scam_type": "none",
+            "language": "en"
+          },
+          "red_flags": [],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message appears to be safe and does not show any signs of a scam. You can proceed normally, but always stay cautious with unexpected messages.",
+            "do_now": [
+              "Verify the sender's identity if you are unsure.",
+              "Keep your personal information and banking details private.",
+              "Use official apps for any transactions."
+            ],
+            "never_do": [
+              "Never share your UPI PIN, OTP, or passwords with anyone.",
+              "Do not click on suspicious links from unknown sources.",
+              "Do not download apps suggested by strangers."
+            ],
+            "report": ""
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"safe\",\n  \"confidence\": 95,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1056
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 3162
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message appears to be safe and does not show any signs of a scam. You can proceed normally, but always stay cautious with unexpected messages.\",\n  \"do_now\": [\n    \"Verify the sender's identity if you are unsure.\",\n    \"Keep your personal information and banking details private.\",\n    \"Use official apps for any transactions.\"\n  ],\n  \"never_do\": [\n    \"Never share your UPI PIN, OTP, or passwords with anyone.\",\n    \"Do not click on suspicious links from unknown sources.\",\n    \"Do not download apps suggested by strangers.\"\n  ],\n  \"report\": \"\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 4594
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "E5",
+      "type": "edge",
+      "description": "'Friend' on a new number asking for urgent money",
+      "expected_verdict": "suspicious",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "scam",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 4754,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "impersonation",
+            "language": "en"
+          },
+          "red_flags": [
+            {
+              "flag": "Urgent request for money",
+              "evidence": "Can you send ₹8,000 to rohan.help@okaxis right now?",
+              "why_risky": "Scammers create fake emergencies to pressure you into sending money quickly without thinking."
+            },
+            {
+              "flag": "Avoiding voice verification",
+              "evidence": "Please don't call, I can't talk.",
+              "why_risky": "Impersonators forbid calls to prevent you from realizing they are not the person they claim to be."
+            },
+            {
+              "flag": "Unverified identity claim",
+              "evidence": "Hey it's me Rohan, I changed my number.",
+              "why_risky": "Scammers often pretend to be a friend or relative with a new number to bypass your suspicion."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This is a scam. Someone is impersonating your friend to trick you into sending money urgently.",
+            "do_now": [
+              "Call your friend on their original, old phone number to verify if they are actually in trouble.",
+              "Block the sender's number immediately on WhatsApp.",
+              "Delete the message after taking a screenshot for evidence."
+            ],
+            "never_do": [
+              "Do not send any money to the UPI ID provided.",
+              "Do not reply to the message or engage with the scammer.",
+              "Do not share any personal or bank details with them."
+            ],
+            "report": "Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already sent money, call 1930 and your bank immediately."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"impersonation\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 945
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Urgent request for money\",\n    \"evidence\": \"Can you send ₹8,000 to rohan.help@okaxis right now?\",\n    \"why_risky\": \"Scammers create fake emergencies to pressure you into sending money quickly without thinking.\"\n  },\n  {\n    \"flag\": \"Avoiding voice verification\",\n    \"evidence\": \"Please don't call, I can't talk.\",\n    \"why_risky\": \"Impersonators forbid calls to prevent you from realizing they are not the person they claim to be.\"\n  },\n  {\n    \"flag\": \"Unverified identity claim\",\n    \"evidence\": \"Hey it's me Rohan, I changed my number.\",\n    \"why_risky\": \"Scammers often pretend to be a friend or relative with a new number to bypass your suspicion.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1952
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This is a scam. Someone is impersonating your friend to trick you into sending money urgently.\",\n  \"do_now\": [\n    \"Call your friend on their original, old phone number to verify if they are actually in trouble.\",\n    \"Block the sender's number immediately on WhatsApp.\",\n    \"Delete the message after taking a screenshot for evidence.\"\n  ],\n  \"never_do\": [\n    \"Do not send any money to the UPI ID provided.\",\n    \"Do not reply to the message or engage with the scammer.\",\n    \"Do not share any personal or bank details with them.\"\n  ],\n  \"report\": \"Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already sent money, call 1930 and your bank immediately.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1853
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "verdict": "scam",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 13809,
+          "classification": {
+            "verdict": "scam",
+            "confidence": 100,
+            "scam_type": "impersonation",
+            "language": "en"
+          },
+          "red_flags": [
+            {
+              "flag": "Urgent request for money",
+              "evidence": "Can you send ₹8,000 to rohan.help@okaxis right now?",
+              "why_risky": "Scammers create fake emergencies to pressure you into sending money quickly without thinking."
+            },
+            {
+              "flag": "Avoiding voice verification",
+              "evidence": "Please don't call, I can't talk.",
+              "why_risky": "Impersonators discourage phone calls because they know you will recognize that they are not the person they claim to be."
+            },
+            {
+              "flag": "Unverified identity change",
+              "evidence": "Hey it's me Rohan, I changed my number.",
+              "why_risky": "Scammers often claim to have a new number to explain why they are messaging from an unknown contact."
+            }
+          ],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This is a scam. Someone is impersonating your friend to trick you into sending money by creating a fake emergency.",
+            "do_now": [
+              "Call your friend on their old, original phone number to verify if they actually sent this message.",
+              "Block the sender's number immediately on WhatsApp.",
+              "Ignore all requests for money or urgent transfers."
+            ],
+            "never_do": [
+              "Do not send any money to the UPI ID provided.",
+              "Do not share any personal details or bank information.",
+              "Do not click on any links or reply to the message."
+            ],
+            "report": "Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already sent money, call 1930 and your bank immediately."
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"scam\",\n  \"confidence\": 100,\n  \"scam_type\": \"impersonation\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1303
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[\n  {\n    \"flag\": \"Urgent request for money\",\n    \"evidence\": \"Can you send ₹8,000 to rohan.help@okaxis right now?\",\n    \"why_risky\": \"Scammers create fake emergencies to pressure you into sending money quickly without thinking.\"\n  },\n  {\n    \"flag\": \"Avoiding voice verification\",\n    \"evidence\": \"Please don't call, I can't talk.\",\n    \"why_risky\": \"Impersonators discourage phone calls because they know you will recognize that they are not the person they claim to be.\"\n  },\n  {\n    \"flag\": \"Unverified identity change\",\n    \"evidence\": \"Hey it's me Rohan, I changed my number.\",\n    \"why_risky\": \"Scammers often claim to have a new number to explain why they are messaging from an unknown contact.\"\n  }\n]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 10644
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This is a scam. Someone is impersonating your friend to trick you into sending money by creating a fake emergency.\",\n  \"do_now\": [\n    \"Call your friend on their old, original phone number to verify if they actually sent this message.\",\n    \"Block the sender's number immediately on WhatsApp.\",\n    \"Ignore all requests for money or urgent transfers.\"\n  ],\n  \"never_do\": [\n    \"Do not send any money to the UPI ID provided.\",\n    \"Do not share any personal details or bank information.\",\n    \"Do not click on any links or reply to the message.\"\n  ],\n  \"report\": \"Report this scam at https://cybercrime.gov.in or call the 1930 cyber-crime helpline. If you have already sent money, call 1930 and your bank immediately.\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1858
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I1",
+      "type": "invalid",
+      "description": "Empty string",
+      "expected_verdict": "invalid",
+      "expected_language": null,
+      "validator": "empty",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "invalid"
+        },
+        {
+          "run": 2,
+          "verdict": "invalid"
+        }
+      ]
+    },
+    {
+      "id": "I2",
+      "type": "invalid",
+      "description": "Random gibberish",
+      "expected_verdict": "safe",
+      "expected_language": "en",
+      "validator": "passed",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "safe",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 29931,
+          "classification": {
+            "verdict": "safe",
+            "confidence": 80,
+            "scam_type": "none",
+            "language": "en"
+          },
+          "red_flags": [],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message appears to be safe as it does not contain any suspicious links or requests for sensitive information. You can proceed with caution.",
+            "do_now": [
+              "Verify the sender's identity through a known contact method.",
+              "Keep your personal information and banking details private.",
+              "Always use official bank apps for any financial transactions."
+            ],
+            "never_do": [
+              "Never share your UPI PIN, OTP, or passwords with anyone.",
+              "Do not click on unknown links or download attachments from unsolicited messages.",
+              "Never trust messages asking for urgent money transfers."
+            ],
+            "report": ""
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"safe\",\n  \"confidence\": 80,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 9229
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1492
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message appears to be safe as it does not contain any suspicious links or requests for sensitive information. You can proceed with caution.\",\n  \"do_now\": [\n    \"Verify the sender's identity through a known contact method.\",\n    \"Keep your personal information and banking details private.\",\n    \"Always use official bank apps for any financial transactions.\"\n  ],\n  \"never_do\": [\n    \"Never share your UPI PIN, OTP, or passwords with anyone.\",\n    \"Do not click on unknown links or download attachments from unsolicited messages.\",\n    \"Never trust messages asking for urgent money transfers.\"\n  ],\n  \"report\": \"\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 19207
+            }
+          ]
+        },
+        {
+          "run": 2,
+          "verdict": "safe",
+          "language": "en",
+          "json_valid": true,
+          "latency_ms": 3809,
+          "classification": {
+            "verdict": "safe",
+            "confidence": 100,
+            "scam_type": "none",
+            "language": "en"
+          },
+          "red_flags": [],
+          "ungrounded_flags": [],
+          "advice": {
+            "summary": "This message is safe and does not appear to be a scam. You can ignore it or delete it as it poses no threat to your security.",
+            "do_now": [
+              "You can safely delete the message.",
+              "Continue to be cautious with any future messages you receive."
+            ],
+            "never_do": [
+              "Never share your UPI PIN, OTP, or passwords with anyone.",
+              "Do not click on suspicious links from unknown senders."
+            ],
+            "report": ""
+          },
+          "steps": [
+            {
+              "step": "P1",
+              "raw": [
+                "{\n  \"verdict\": \"safe\",\n  \"confidence\": 100,\n  \"scam_type\": \"none\",\n  \"language\": \"en\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1814
+            },
+            {
+              "step": "P2",
+              "raw": [
+                "[]"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 557
+            },
+            {
+              "step": "P3",
+              "raw": [
+                "{\n  \"summary\": \"This message is safe and does not appear to be a scam. You can ignore it or delete it as it poses no threat to your security.\",\n  \"do_now\": [\n    \"You can safely delete the message.\",\n    \"Continue to be cautious with any future messages you receive.\"\n  ],\n  \"never_do\": [\n    \"Never share your UPI PIN, OTP, or passwords with anyone.\",\n    \"Do not click on suspicious links from unknown senders.\"\n  ],\n  \"report\": \"\"\n}"
+              ],
+              "firstAttemptValid": true,
+              "latencyMs": 1434
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "I3",
+      "type": "invalid",
+      "description": "2500-character text",
+      "expected_verdict": "invalid",
+      "expected_language": null,
+      "validator": "too_long",
+      "runs": [
+        {
+          "run": 1,
+          "verdict": "invalid"
+        },
+        {
+          "run": 2,
+          "verdict": "invalid"
+        }
+      ]
+    }
+  ]
+}

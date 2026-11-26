@@ -34,7 +34,8 @@ export function getModel(): string {
 function getClient(): GoogleGenAI {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) throw new LlmError("GEMINI_API_KEY is not set on the server.", "config");
-  client ??= new GoogleGenAI({ apiKey });
+  // 30 s per request: without it a stalled connection can hang forever.
+  client ??= new GoogleGenAI({ apiKey, httpOptions: { timeout: 30_000 } });
   return client;
 }
 
@@ -64,7 +65,7 @@ function toLlmError(err: unknown): LlmError {
     return new LlmError(`Model "${getModel()}" was not found: ${message.slice(0, 200)}`, "config");
   }
   // No HTTP response at all: the request never reached Gemini (connection down, DNS, timeout).
-  if (status === undefined && /fetch failed|ECONNRESET|ECONNREFUSED|ENOTFOUND|ETIMEDOUT|EAI_AGAIN|socket hang up|network/i.test(message)) {
+  if (status === undefined && /fetch failed|ECONNRESET|ECONNREFUSED|ENOTFOUND|ETIMEDOUT|EAI_AGAIN|socket hang up|network|abort|timed? ?out/i.test(message)) {
     return new LlmError("Could not reach Gemini (network error).", "network");
   }
   return new LlmError(`Gemini request failed: ${message.slice(0, 300)}`, "api");
